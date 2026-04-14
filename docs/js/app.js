@@ -27,6 +27,7 @@ const stakeholder = document.querySelector('#stakeholder');
 const documentStatus = document.querySelector('#documentStatus');
 const question = document.querySelector('#question');
 const analyzeButton = document.querySelector('#analyzeButton');
+const geminiApiKey = document.querySelector('#geminiApiKey');
 const openLawOc = document.querySelector('#openLawOc');
 const provider = document.querySelector('#provider');
 const copyEnvButton = document.querySelector('#copyEnvButton');
@@ -66,9 +67,10 @@ function renderFrequentIssues() {
 }
 
 function buildEnvText() {
+  const geminiKey = geminiApiKey.value.trim();
   const oc = openLawOc.value.trim();
   return [
-    'GEMINI_API_KEY=',
+    `GEMINI_API_KEY=${geminiKey}`,
     `OPEN_LAW_OC=${oc}`,
     `LEGAL_DATA_PROVIDER=${provider.value}`,
     'KOREAN_LAW_MCP_URL=http://localhost:8096/mcp',
@@ -79,9 +81,10 @@ function buildEnvText() {
 }
 
 function updateEnvPreview() {
+  const geminiKey = geminiApiKey.value.trim();
   const hasOc = openLawOc.value.trim().length > 0;
-  envPreview.textContent = hasOc ? buildEnvText() : [
-    'GEMINI_API_KEY=',
+  envPreview.textContent = hasOc || geminiKey ? buildEnvText() : [
+    `GEMINI_API_KEY=${geminiKey}`,
     'OPEN_LAW_OC=',
     `LEGAL_DATA_PROVIDER=${provider.value}`,
     'KOREAN_LAW_MCP_URL=http://localhost:8096/mcp',
@@ -264,11 +267,13 @@ copyEnvButton.addEventListener('click', async () => {
 });
 
 clearKeysButton.addEventListener('click', () => {
+  geminiApiKey.value = '';
   openLawOc.value = '';
   apiMessage.textContent = '입력값을 지웠습니다.';
   updateEnvPreview();
 });
 
+geminiApiKey.addEventListener('input', updateEnvPreview);
 openLawOc.addEventListener('input', updateEnvPreview);
 provider.addEventListener('change', updateEnvPreview);
 

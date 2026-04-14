@@ -28,6 +28,7 @@ const elements = {
   '#documentStatus': makeElement({ value: '계약서 있음' }),
   '#question': makeElement({ value: '<script>alert(1)</script>' }),
   '#analyzeButton': makeElement(),
+  '#geminiApiKey': makeElement({ value: 'test-gemini-key' }),
   '#openLawOc': makeElement(),
   '#provider': makeElement({ value: 'openlaw_direct' }),
   '#copyEnvButton': makeElement(),
@@ -69,3 +70,8 @@ assert(!resultHtml.includes('<script>'), 'question input must not render raw scr
 assert(!resultHtml.includes('<img'), 'business type input must not render raw HTML tags');
 assert(resultHtml.includes('&lt;script&gt;alert(1)&lt;/script&gt;'), 'question input should render as escaped text');
 assert(resultHtml.includes('&lt;img src=x onerror=alert(1)&gt;'), 'business type input should render as escaped text');
+
+assert(elements['#envPreview'].textContent.includes('GEMINI_API_KEY=test-gemini-key'), 'Gemini API key should be included in the local env preview');
+
+elements['#clearKeysButton'].onclick();
+assert.equal(elements['#geminiApiKey'].value, '', 'clear button should clear Gemini API key input');
