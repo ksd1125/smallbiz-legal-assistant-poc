@@ -123,6 +123,43 @@ textarea {
   color: var(--muted);
 }
 
+.apiSaveForm {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.apiSaveForm label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.apiSaveForm input,
+.apiSaveForm select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel);
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.secondaryButton {
+  min-height: 46px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--green);
+  cursor: pointer;
+  padding: 0 16px;
+}
+
 .issueCard {
   min-height: 96px;
   padding: 14px;

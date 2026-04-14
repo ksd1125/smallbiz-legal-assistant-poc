@@ -18,6 +18,7 @@
 | `docs/source-policy.md` | 공식 출처, 개인정보, 법률정보 고지 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |
 | `src/app/api/config-status/route.ts` | API 키 환경변수 설정 여부 확인 |
+| `src/app/api/local-env/route.ts` | 로컬 개발환경 전용 `.env.local` 저장 |
 | `src/app/api/intake/route.ts` | Intake Agent API |
 | `src/app/api/route-legal-issue/route.ts` | 법률 분야 분류 API |
 | `src/app/api/search-law/route.ts` | 국가법령정보 검색 API |
@@ -29,7 +30,7 @@
 | `src/lib/law/openLawClient.ts` | 국가법령정보 Open API 클라이언트 |
 | `src/lib/law/searchLaw.ts` | 법령, 판례, 법령해석례 검색 래퍼 |
 | `src/lib/safety/legalRiskGuard.ts` | 금지 표현과 안전 고지문 |
-| `src/components/ApiSetupGuide.tsx` | 국가법령정보 API 입력 위치 안내 |
+| `src/components/ApiSetupGuide.tsx` | 국가법령정보 API 입력 위치 안내, 복사, 로컬 저장 |
 | `src/types/legalAssistant.ts` | 공통 TypeScript 타입 |
 
 ## Codex가 빠르게 찾을 질문

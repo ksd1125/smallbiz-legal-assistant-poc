@@ -46,3 +46,4 @@
 - 화면에 `API 설정 위치` 패널을 추가했다.
 - `/api/config-status`에서 `GEMINI_API_KEY`, `OPEN_LAW_OC`, `LAW_API_KEY`의 설정 여부만 반환하도록 했다.
 - 실제 API 키 값은 화면에 표시하지 않는다.
+- `복사` 버튼과 로컬 개발환경 전용 `.env.local` 저장 API를 추가했다.
