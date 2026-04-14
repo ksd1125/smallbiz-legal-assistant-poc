@@ -14,6 +14,7 @@
 | `AGENTS.md` | Codex가 새 세션에서 따라야 할 작업 지침 |
 | `WORKLOG.md` | 최근 작업, 다음 작업, 세션 연속성 |
 | `docs/architecture.md` | Agent API, Gemini 역할, 데이터 흐름 |
+| `docs/mcp-integration.md` | korean-law-mcp, lexguard-mcp, 국가법령정보 Open API 관계 |
 | `docs/source-policy.md` | 공식 출처, 개인정보, 법률정보 고지 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |
 | `src/app/api/intake/route.ts` | Intake Agent API |
@@ -33,6 +34,7 @@
 
 - "Intake Agent는 어디에 있나?" → `src/lib/gemini/agents.ts`, `src/app/api/intake/route.ts`
 - "국가법령정보 API는 어디서 호출하나?" → `src/lib/law/openLawClient.ts`
+- "MCP를 쓰려면 어디를 보나?" → `docs/mcp-integration.md`
 - "법률 자문 오해 방지는 어디서 하나?" → `src/lib/safety/legalRiskGuard.ts`, `src/app/api/risk-check/route.ts`
 - "화면 카드는 어디서 바꾸나?" → `src/components/IssueCards.tsx`
 - "새 작업 시작 시 무엇을 읽나?" → `WORKLOG.md`, `AGENTS.md`

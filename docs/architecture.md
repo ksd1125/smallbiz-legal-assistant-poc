@@ -16,6 +16,20 @@ page.tsx
 → ResultTabs
 ```
 
+## 법령 데이터 연동 방식
+
+현재 POC 코드는 `src/lib/law/openLawClient.ts`에서 국가법령정보 Open API를 직접 호출하는 구조다. `korean-law-mcp`를 쓰는 경우에는 앱이 국가법령정보 API를 직접 호출하지 않고, 별도 실행 중인 MCP 서버의 tool을 호출한다.
+
+```text
+직접 API 방식:
+Next.js API Route → 국가법령정보 Open API
+
+MCP 방식:
+Next.js API Route → korean-law-mcp 또는 lexguard-mcp → 국가법령정보 Open API
+```
+
+따라서 데이터의 원천은 둘 다 국가법령정보 Open API이고, MCP는 그 위에 있는 도구 호출 계층이다.
+
 ## 에이전트
 
 | Agent | 파일 | 역할 |
@@ -32,6 +46,9 @@ page.tsx
 |---|---|---|
 | `GEMINI_API_KEY` | Gemini API 호출 | `.env.local` |
 | `OPEN_LAW_OC` | 국가법령정보 Open API OC 값 | `.env.local` |
+| `LAW_API_KEY` | korean-law-mcp 또는 lexguard-mcp 실행 시 쓰는 국가법령정보 API 키 | MCP 서버의 `.env` 또는 `.env.local` |
+| `KOREAN_LAW_MCP_URL` | korean-law-mcp 로컬 MCP 엔드포인트 | `.env.local` |
+| `LEXGUARD_MCP_URL` | lexguard-mcp 로컬 MCP 엔드포인트 | `.env.local` |
 
 ## API 키 보안
 

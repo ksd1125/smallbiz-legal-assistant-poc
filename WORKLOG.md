@@ -34,3 +34,9 @@
 - `npm.cmd audit --audit-level=low`: 취약점 0개.
 - `npm.cmd run typecheck`: TypeScript 검증 통과.
 - `git ls-remote https://github.com/ksd1125/smallbiz-legal-assistant-poc.git`: GitHub 원격 저장소가 아직 없어 `Repository not found`가 반환됐다.
+
+### MCP 연동 정리
+
+- `korean-law-mcp`는 국가법령정보센터 Open API를 활용하는 MCP 서버로 확인했다.
+- 현재 POC는 국가법령정보 Open API 직접 호출 방식이며, MCP는 2단계 adapter로 붙이는 방향으로 정리했다.
+- `docs/mcp-integration.md`를 추가해 직접 API 방식과 MCP 경유 방식의 차이를 기록했다.

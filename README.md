@@ -9,6 +9,7 @@
 - 카드형 상황 선택 UI
 - Gemini 기반 역할별 Agent API 초안
 - 국가법령정보 Open API 검색 클라이언트 초안
+- `korean-law-mcp` 또는 `lexguard-mcp` 연동을 위한 MCP 설계 문서
 - 법률 자문 오해 방지용 Risk Guard
 - GitHub/Codex 검색용 문서 인덱스
 
@@ -29,6 +30,10 @@ npm run dev
 ```text
 GEMINI_API_KEY=
 OPEN_LAW_OC=
+LEGAL_DATA_PROVIDER=openlaw_direct
+KOREAN_LAW_MCP_URL=http://localhost:8096/mcp
+LEXGUARD_MCP_URL=http://localhost:9099/mcp
+LAW_API_KEY=
 ```
 
 브라우저에서 `http://localhost:3000`을 연다.
@@ -55,6 +60,7 @@ git push -u origin main
 - `WORKLOG.md`: 작업 이력과 다음 작업
 - `docs/AI_SEARCH_INDEX.md`: Codex/GitHub 검색용 색인
 - `docs/architecture.md`: Agent API 아키텍처
+- `docs/mcp-integration.md`: 국가법령정보 MCP 연동 방식
 - `docs/source-policy.md`: 출처와 보안 정책
 
 ## 보안 원칙
