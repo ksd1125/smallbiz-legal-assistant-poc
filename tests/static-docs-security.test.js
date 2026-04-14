@@ -53,7 +53,7 @@ const document = {
   }
 };
 
-const source = fs.readFileSync(path.join(__dirname, '..', 'docs', 'app.js'), 'utf8');
+const source = fs.readFileSync(path.join(__dirname, '..', 'docs', 'js', 'app.js'), 'utf8');
 
 vm.runInNewContext(source, {
   document,

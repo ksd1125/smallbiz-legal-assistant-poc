@@ -17,7 +17,8 @@
 | `docs/mcp-integration.md` | korean-law-mcp, lexguard-mcp, 국가법령정보 Open API 관계 |
 | `docs/source-policy.md` | 공식 출처, 개인정보, 법률정보 고지 |
 | `docs/index.html` | GitHub Pages용 정적 POC 화면 |
-| `docs/app.js` | 정적 POC 카드 입력, 검색 링크, API 설정 복사 |
+| `docs/js/app.js` | 정적 POC 카드 입력, 검색 링크, API 설정 복사 |
+| `docs/css/styles.css` | 정적 POC 화면 스타일 |
 | `.github/workflows/pages.yml` | GitHub Pages 배포 워크플로 |
 | `tests/static-docs-security.test.js` | 정적 POC 입력값 이스케이프 검증 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |

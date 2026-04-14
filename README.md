@@ -106,6 +106,8 @@ https://ksd1125.github.io/smallbiz-legal-assistant-poc/
 - `docs/mcp-integration.md`: 국가법령정보 MCP 연동 방식
 - `docs/source-policy.md`: 출처와 보안 정책
 - `docs/index.html`: GitHub Pages용 정적 POC 화면
+- `docs/css/styles.css`: GitHub Pages용 정적 POC 스타일
+- `docs/js/app.js`: GitHub Pages용 정적 POC 스크립트
 - `src/lib/issueCatalog.ts`: 상황 카드, 자주 묻는 이슈, 관련 법률 후보
 - `src/lib/law/koreanLawMcpClient.ts`: `SeoNaRu/korean-law-mcp` 호출 adapter 초안
 - `tests/static-docs-security.test.js`: 정적 POC 입력값 이스케이프 검증
