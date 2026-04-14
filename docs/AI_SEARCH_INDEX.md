@@ -19,7 +19,6 @@
 | `docs/index.html` | GitHub Pages용 정적 POC 화면 |
 | `docs/js/app.js` | 정적 POC 카드 입력, 검색 링크, API 설정 복사 |
 | `docs/css/styles.css` | 정적 POC 화면 스타일 |
-| `.github/workflows/pages.yml` | GitHub Pages 배포 워크플로 |
 | `tests/static-docs-security.test.js` | 정적 POC 입력값 이스케이프 검증 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |
 | `src/lib/issueCatalog.ts` | 상황 카드, 자주 묻는 이슈, 관련 법률 후보 |

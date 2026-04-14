@@ -73,17 +73,7 @@ git push -u origin main
 
 GitHub Pages는 서버 환경변수와 API Routes를 실행하지 않으므로, `docs\` 화면은 API 키를 저장하지 않고 국가법령정보 검색 링크와 상담 준비용 체크리스트를 보여주는 데모로 사용한다.
 
-배포 설정은 두 가지 중 하나를 사용한다.
-
-1. GitHub Actions 사용
-
-```text
-Settings → Pages → Build and deployment → Source: GitHub Actions
-```
-
-이 저장소에는 `.github\workflows\pages.yml`이 있어 `main` 브랜치의 `docs\` 변경을 GitHub Pages로 배포한다.
-
-2. 브랜치 폴더 직접 배포
+배포 설정:
 
 ```text
 Settings → Pages → Build and deployment → Source: Deploy from a branch

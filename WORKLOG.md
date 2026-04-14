@@ -64,4 +64,4 @@
 - `tests/issue-catalog.test.js`로 상황 카드별 FAQ/관련 법률 후보 데이터 검증을 추가했다.
 - GitHub Pages 배포용 `docs` 정적 화면에도 오픈형/상황 카드형 UX와 HWP/Excel 복사용 결과를 반영했다.
 - GitHub Pages 정적 자산은 `docs\index.html`, `docs\css\styles.css`, `docs\js\app.js` 구조로 정리했다.
-- `.github/workflows/pages.yml`을 추가해 `docs` 폴더를 GitHub Pages로 배포할 수 있게 했다.
+- GitHub Pages는 별도 Actions 워크플로가 아니라 `Deploy from a branch → main → /docs` 방식으로 운영한다.
