@@ -14,20 +14,18 @@
 ## 현재 확인한 저장소 상태
 
 - `SeoNaRu/korean-law-mcp`: README 기준 국가법령정보센터 Open API를 활용한 MCP 서버다. 법령 검색, 법령 상세 조회, 판례 검색, 판례 상세 조회, 행정규칙 검색 도구를 제공한다.
-- 같은 README에는 저장소 이전 안내가 있으며, 최신 기능은 `SeoNaRu/lexguard-mcp` 사용을 권장한다고 적혀 있다.
+- 2026-04-14 확인 기준 `SeoNaRu/korean-law-mcp`는 GitHub 공개 저장소이며 stars 61, forks 17, commits 4개로 확인됐다. README 기준 `LAW_API_KEY`, 기본 포트 `8096`, `python -m src.law_main` 실행 방식을 사용한다.
 - `SeoNaRu/lexguard-mcp`: README 기준 국가법령정보센터(Open Law) 공식 데이터를 기반으로 법령, 조문, 판례, 법령해석, 행정심판, 헌재결정을 제공하는 MCP 서버다.
 
 ## 권장 방향
 
-POC 1단계는 직접 API 방식으로 유지한다. 이유는 화면과 Agent API 흐름을 빠르게 검증하기 위해서다.
-
-POC 2단계에서 MCP adapter를 추가한다.
+POC는 직접 API와 `korean-law-mcp` adapter를 모두 둔다. 화면과 Agent API 흐름 검증은 직접 API로 빠르게 진행할 수 있고, 실제 법률 검색 확장은 `LEGAL_DATA_PROVIDER=korean_law_mcp`로 전환해 확인한다.
 
 ```text
 src/lib/law/searchLaw.ts
 → LEGAL_DATA_PROVIDER 값 확인
 → openlaw_direct이면 openLawClient.ts 호출
-→ korean_law_mcp이면 koreanLawMcpClient.ts 호출
+→ korean_law_mcp이면 koreanLawMcpClient.ts에서 search_law_tool, search_precedent_tool, search_administrative_rule_tool 호출 시도
 → lexguard_mcp이면 lexguardMcpClient.ts 호출
 ```
 

@@ -33,7 +33,16 @@ async function postJson<T>(url: string, body: unknown): Promise<T> {
 }
 
 export default function Home() {
-  const [input, setInput] = useState<IntakeInput>({ issueCard: 'startup', businessType: '', stage: '창업 전', question: '' });
+  const [input, setInput] = useState<IntakeInput>({
+    issueCard: 'startup',
+    intakeMode: 'guided',
+    businessType: '',
+    stage: '창업 전',
+    stakeholder: '',
+    documentStatus: '아직 없음',
+    interestIssue: '',
+    question: ''
+  });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [intake, setIntake] = useState<IntakeResult>();
@@ -97,10 +106,15 @@ export default function Home() {
       <section className="workspace">
         <div className="leftPane">
           <h2>상황 선택</h2>
-          <ApiSetupGuide status={configStatus} />
-          <IssueCards selected={input.issueCard} onSelect={(issueCard: IssueCardId) => setInput((current) => ({ ...current, issueCard }))} />
+          {input.intakeMode === 'guided' ? (
+            <IssueCards selected={input.issueCard} onSelect={(issueCard: IssueCardId) => setInput((current) => ({ ...current, issueCard, interestIssue: '' }))} />
+          ) : null}
           <GuidedIntake {...input} loading={loading} onChange={(patch) => setInput((current) => ({ ...current, ...patch }))} onSubmit={runFlow} />
           {message ? <p className="statusLine">{message}</p> : null}
+          <details className="developerPanel">
+            <summary>개발자용 API 설정</summary>
+            <ApiSetupGuide status={configStatus} />
+          </details>
         </div>
         <div className="rightPane">
           <ResultTabs intake={intake} route={route} evidence={evidence} answer={answer} risk={risk} />

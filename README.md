@@ -7,8 +7,10 @@
 ## 현재 범위
 
 - 카드형 상황 선택 UI
+- 오픈형 질문과 상황 카드형 입력을 함께 쓰는 UI
+- 상황별 자주 묻는 이슈 버튼과 관련 법률 후보 안내
 - Gemini 기반 역할별 Agent API 초안
-- 국가법령정보 Open API 검색 클라이언트 초안
+- 국가법령정보 Open API 직접 검색과 `korean-law-mcp` adapter 초안
 - `korean-law-mcp` 또는 `lexguard-mcp` 연동을 위한 MCP 설계 문서
 - API 설정 위치와 서버 인식 여부를 보여주는 설정 안내 패널
 - 법률 자문 오해 방지용 Risk Guard
@@ -40,6 +42,8 @@ LAW_API_KEY=
 
 웹 화면의 `API 설정 위치` 패널에서 `OPEN_LAW_OC`, `LAW_API_KEY`가 서버에 설정되었는지 확인할 수 있다. 패널은 값 자체를 보여주지 않고 설정 여부만 표시한다.
 
+`SeoNaRu/korean-law-mcp`를 활용하려면 MCP 서버를 별도로 실행하고 `.env.local`에서 `LEGAL_DATA_PROVIDER=korean_law_mcp`, `KOREAN_LAW_MCP_URL=http://localhost:8096/mcp`로 설정한다. MCP 서버의 API 키는 `LAW_API_KEY` 이름으로 설정한다.
+
 로컬 개발 서버에서만 `API 설정 위치` 패널의 `복사`와 `로컬 .env.local 저장` 버튼을 사용할 수 있다. 배포 환경에서는 서버 파일 저장 API가 차단된다.
 
 브라우저에서 `http://localhost:3000`을 연다.
@@ -60,6 +64,39 @@ git remote add origin https://github.com/ksd1125/smallbiz-legal-assistant-poc.gi
 git push -u origin main
 ```
 
+## GitHub Pages 배포
+
+이 저장소는 두 가지 실행 형태를 구분한다.
+
+- `src\app`: Gemini Agent와 Next.js API Routes를 쓰는 로컬/서버 실행용 앱
+- `docs\`: GitHub Pages에서 바로 열 수 있는 정적 데모 화면
+
+GitHub Pages는 서버 환경변수와 API Routes를 실행하지 않으므로, `docs\` 화면은 API 키를 저장하지 않고 국가법령정보 검색 링크와 상담 준비용 체크리스트를 보여주는 데모로 사용한다.
+
+배포 설정은 두 가지 중 하나를 사용한다.
+
+1. GitHub Actions 사용
+
+```text
+Settings → Pages → Build and deployment → Source: GitHub Actions
+```
+
+이 저장소에는 `.github\workflows\pages.yml`이 있어 `main` 브랜치의 `docs\` 변경을 GitHub Pages로 배포한다.
+
+2. 브랜치 폴더 직접 배포
+
+```text
+Settings → Pages → Build and deployment → Source: Deploy from a branch
+Branch: main
+Folder: /docs
+```
+
+예상 URL:
+
+```text
+https://ksd1125.github.io/smallbiz-legal-assistant-poc/
+```
+
 ## 문서 위치
 
 - `AGENTS.md`: Codex 작업 지침
@@ -69,7 +106,10 @@ git push -u origin main
 - `docs/mcp-integration.md`: 국가법령정보 MCP 연동 방식
 - `docs/source-policy.md`: 출처와 보안 정책
 - `docs/index.html`: GitHub Pages용 정적 POC 화면
+- `src/lib/issueCatalog.ts`: 상황 카드, 자주 묻는 이슈, 관련 법률 후보
+- `src/lib/law/koreanLawMcpClient.ts`: `SeoNaRu/korean-law-mcp` 호출 adapter 초안
 - `tests/static-docs-security.test.js`: 정적 POC 입력값 이스케이프 검증
+- `tests/issue-catalog.test.js`: 상황 카드와 자주 묻는 이슈 데이터 검증
 
 ## 보안 원칙
 

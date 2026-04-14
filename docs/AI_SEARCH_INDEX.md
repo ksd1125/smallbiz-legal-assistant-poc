@@ -18,8 +18,10 @@
 | `docs/source-policy.md` | 공식 출처, 개인정보, 법률정보 고지 |
 | `docs/index.html` | GitHub Pages용 정적 POC 화면 |
 | `docs/app.js` | 정적 POC 카드 입력, 검색 링크, API 설정 복사 |
+| `.github/workflows/pages.yml` | GitHub Pages 배포 워크플로 |
 | `tests/static-docs-security.test.js` | 정적 POC 입력값 이스케이프 검증 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |
+| `src/lib/issueCatalog.ts` | 상황 카드, 자주 묻는 이슈, 관련 법률 후보 |
 | `src/app/api/config-status/route.ts` | API 키 환경변수 설정 여부 확인 |
 | `src/app/api/local-env/route.ts` | 로컬 개발환경 전용 `.env.local` 저장 |
 | `src/app/api/intake/route.ts` | Intake Agent API |
@@ -31,6 +33,7 @@
 | `src/lib/gemini/client.ts` | Gemini REST API 공통 호출 |
 | `src/lib/gemini/schemas.ts` | Structured Output 스키마 |
 | `src/lib/law/openLawClient.ts` | 국가법령정보 Open API 클라이언트 |
+| `src/lib/law/koreanLawMcpClient.ts` | SeoNaRu/korean-law-mcp adapter 초안 |
 | `src/lib/law/searchLaw.ts` | 법령, 판례, 법령해석례 검색 래퍼 |
 | `src/lib/safety/legalRiskGuard.ts` | 금지 표현과 안전 고지문 |
 | `src/components/ApiSetupGuide.tsx` | 국가법령정보 API 입력 위치 안내, 복사, 로컬 저장 |
@@ -42,6 +45,7 @@
 - "국가법령정보 API는 어디서 호출하나?" → `src/lib/law/openLawClient.ts`
 - "API 키는 어디에 입력하나?" → `src/components/ApiSetupGuide.tsx`, `src/app/api/config-status/route.ts`
 - "MCP를 쓰려면 어디를 보나?" → `docs/mcp-integration.md`
+- "korean-law-mcp adapter는 어디에 있나?" → `src/lib/law/koreanLawMcpClient.ts`, `src/lib/law/searchLaw.ts`
 - "법률 자문 오해 방지는 어디서 하나?" → `src/lib/safety/legalRiskGuard.ts`, `src/app/api/risk-check/route.ts`
 - "화면 카드는 어디서 바꾸나?" → `src/components/IssueCards.tsx`
 - "GitHub Pages 화면은 어디서 바꾸나?" → `docs/index.html`, `docs/styles.css`, `docs/app.js`

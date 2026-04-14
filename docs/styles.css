@@ -123,6 +123,49 @@ textarea {
   gap: 10px;
 }
 
+.modeSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0 0 12px;
+  padding: 12px;
+}
+
+.modeButton,
+.issueChip {
+  min-height: 40px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--green);
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+.modeButton.active,
+.issueChip.active {
+  background: var(--green);
+  color: #fff;
+}
+
+.frequentIssues {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7faf8;
+  margin-top: 12px;
+  padding: 12px;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .issueCard {
   min-height: 92px;
   border: 1px solid var(--line);
@@ -229,6 +272,17 @@ textarea {
 
 .resultContent li {
   margin: 8px 0;
+}
+
+.copyBox {
+  overflow-x: auto;
+  min-height: 240px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #202521;
+  color: #f7f7f2;
+  padding: 14px;
+  white-space: pre-wrap;
 }
 
 @media (max-width: 1100px) {

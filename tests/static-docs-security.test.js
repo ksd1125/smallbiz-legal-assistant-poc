@@ -9,6 +9,7 @@ function makeElement(initial = {}) {
     textContent: '',
     innerHTML: '',
     dataset: initial.dataset ?? {},
+    style: {},
     classList: { toggle() {} },
     addEventListener(type, handler) {
       this[`on${type}`] = handler;
@@ -18,8 +19,13 @@ function makeElement(initial = {}) {
 
 const elements = {
   '#issueGrid': makeElement(),
+  '#frequentIssues': makeElement(),
+  '#guidedModeButton': makeElement(),
+  '#openModeButton': makeElement(),
   '#businessType': makeElement({ value: '<img src=x onerror=alert(1)>' }),
   '#stage': makeElement({ value: '분쟁 발생' }),
+  '#stakeholder': makeElement({ value: '임대인' }),
+  '#documentStatus': makeElement({ value: '계약서 있음' }),
   '#question': makeElement({ value: '<script>alert(1)</script>' }),
   '#analyzeButton': makeElement(),
   '#openLawOc': makeElement(),

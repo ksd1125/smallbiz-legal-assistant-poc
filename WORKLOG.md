@@ -53,3 +53,14 @@
 - `docs/index.html`, `docs/styles.css`, `docs/app.js`로 서버 없이 열 수 있는 정적 POC 화면을 추가했다.
 - GitHub Pages에서 API 키를 저장하지 않고 현재 브라우저 세션 입력값만 사용하도록 안내했다.
 - 정적 화면의 사용자 입력값이 HTML로 실행되지 않도록 `tests/static-docs-security.test.js` 검증을 추가했다.
+
+### 오픈형/상황 카드형 UI와 korean-law-mcp adapter
+
+- React POC 화면에 `상황에서 고르기`와 `그냥 질문하기` 시작 방식을 추가했다.
+- 상황 카드별 자주 묻는 이슈 버튼과 관련 법률 후보 안내를 `src/lib/issueCatalog.ts`로 분리했다.
+- 입력 항목에 상대방/관계자, 날짜가 있는 문서 여부, 관심 이슈를 추가했다.
+- 결과 영역을 `요약`, `공식 근거`, `체크리스트`, `상담 준비`, `HWP/Excel 복사용` 구조로 확장했다.
+- `LEGAL_DATA_PROVIDER=korean_law_mcp`일 때 `SeoNaRu/korean-law-mcp`의 MCP tool 호출을 시도하는 `src/lib/law/koreanLawMcpClient.ts` adapter를 추가했다.
+- `tests/issue-catalog.test.js`로 상황 카드별 FAQ/관련 법률 후보 데이터 검증을 추가했다.
+- GitHub Pages 배포용 `docs` 정적 화면에도 오픈형/상황 카드형 UX와 HWP/Excel 복사용 결과를 반영했다.
+- `.github/workflows/pages.yml`을 추가해 `docs` 폴더를 GitHub Pages로 배포할 수 있게 했다.

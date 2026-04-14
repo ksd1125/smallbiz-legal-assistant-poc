@@ -16,7 +16,13 @@ export async function runIntakeAgent(input: IntakeInput): Promise<IntakeResult> 
   return callGemini<IntakeResult>(
     `소상공인 법률정보 도우미의 Intake Agent입니다.
 
-사용자 입력을 구조화하세요. 빠진 정보는 최대 3개만 질문하세요.
+사용자 입력을 구조화하세요. 입력 방식은 intakeMode로 구분합니다.
+- guided: 상황 카드와 자주 묻는 이슈를 사용자가 고른 경우
+- open: 사용자가 법률명을 모르고 자유 질문으로 시작한 경우
+
+stakeholder, documentStatus, interestIssue를 참고하되 법률 적용을 단정하지 마세요.
+출력에는 stakeholder, document_status, interest_issue, intake_mode를 유지하세요.
+빠진 정보는 최대 3개만 질문하세요.
 
 입력:
 ${JSON.stringify(input, null, 2)}
@@ -30,8 +36,9 @@ export async function runLegalRouterAgent(intake: IntakeResult): Promise<LegalRo
   return callGemini<LegalRouteResult>(
     `소상공인 법률정보 도우미의 Legal Router Agent입니다.
 
-아래 상황을 국가법령정보 Open API 검색에 적합한 법률 분야와 검색어로 바꾸세요.
+아래 상황을 국가법령정보 Open API 및 korean-law-mcp 검색에 적합한 법률 분야와 검색어로 바꾸세요.
 target은 law, prec, expc, decc 중 하나를 사용하세요.
+현재 POC는 LEGAL_DATA_PROVIDER 값에 따라 Open API 직접 호출 또는 SeoNaRu/korean-law-mcp 도구(search_law_tool, search_precedent_tool, search_administrative_rule_tool) 경유를 사용합니다.
 
 상황:
 ${JSON.stringify(intake, null, 2)}`,

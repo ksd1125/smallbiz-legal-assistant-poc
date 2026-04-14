@@ -192,6 +192,59 @@ textarea {
   gap: 12px;
 }
 
+.modeSelector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin: 0;
+  padding: 12px;
+}
+
+.modeSelector legend,
+.frequentIssues p {
+  font-weight: 700;
+}
+
+.modeButton,
+.issueChip {
+  min-height: 40px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--green);
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+.modeButton.active,
+.issueChip.active {
+  background: var(--green);
+  color: #fff;
+}
+
+.frequentIssues {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7faf8;
+  padding: 12px;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.helperText {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .intakeForm label {
   display: grid;
   gap: 6px;
@@ -239,6 +292,24 @@ textarea {
   font-weight: 700;
 }
 
+.developerPanel {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 12px;
+}
+
+.developerPanel summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.developerPanel .setupGuide {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 .resultPanel {
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -248,7 +319,7 @@ textarea {
 
 .resultColumns {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
 }
 
@@ -284,6 +355,21 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
+}
+
+.copyArticle {
+  grid-column: 1 / -1;
+}
+
+.copyBox {
+  overflow-x: auto;
+  min-height: 180px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #202521;
+  color: #f7f7f2;
+  padding: 14px;
+  white-space: pre-wrap;
 }
 
 @media (max-width: 960px) {

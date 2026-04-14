@@ -3,12 +3,16 @@ export const intakeSchema = {
   properties: {
     business_type: { type: 'string' },
     stage: { type: 'string' },
+    stakeholder: { type: 'string' },
+    document_status: { type: 'string' },
+    interest_issue: { type: 'string' },
+    intake_mode: { type: 'string', enum: ['guided', 'open'] },
     issue_type: { type: 'array', items: { type: 'string' } },
     urgency: { type: 'string', enum: ['낮음', '보통', '높음'] },
     missing_info: { type: 'array', items: { type: 'string' } },
     next_questions: { type: 'array', items: { type: 'string' } }
   },
-  required: ['business_type', 'stage', 'issue_type', 'urgency', 'missing_info', 'next_questions']
+  required: ['business_type', 'stage', 'stakeholder', 'document_status', 'interest_issue', 'intake_mode', 'issue_type', 'urgency', 'missing_info', 'next_questions']
 };
 
 export const legalRouteSchema = {

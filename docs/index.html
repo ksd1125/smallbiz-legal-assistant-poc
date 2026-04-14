@@ -26,7 +26,13 @@
         <div class="toolGrid">
           <section class="inputPane" aria-label="상황 입력">
             <h2>상황 선택</h2>
+            <fieldset class="modeSelector">
+              <legend>시작 방식</legend>
+              <button class="modeButton active" id="guidedModeButton" type="button">상황에서 고르기</button>
+              <button class="modeButton" id="openModeButton" type="button">그냥 질문하기</button>
+            </fieldset>
             <div class="issueGrid" id="issueGrid"></div>
+            <section class="frequentIssues" id="frequentIssues" aria-label="자주 묻는 이슈"></section>
 
             <label>
               업종
@@ -41,6 +47,22 @@
                 <option>분쟁 발생</option>
                 <option>행정처분 수령</option>
                 <option>폐업/양도</option>
+              </select>
+            </label>
+
+            <label>
+              상대방/관계자
+              <input id="stakeholder" placeholder="예: 임대인, 직원, 고객, 거래처, 행정기관">
+            </label>
+
+            <label>
+              날짜가 있는 문서
+              <select id="documentStatus">
+                <option>아직 없음</option>
+                <option>계약서 있음</option>
+                <option>고지서/처분서 있음</option>
+                <option>문자/이메일 기록 있음</option>
+                <option>잘 모르겠음</option>
               </select>
             </label>
 
@@ -83,9 +105,10 @@
           <section class="resultPane" aria-label="결과">
             <div class="tabs">
               <button class="tabButton active" data-tab="summary">요약</button>
-              <button class="tabButton" data-tab="sources">검색 링크</button>
+              <button class="tabButton" data-tab="sources">공식 근거</button>
               <button class="tabButton" data-tab="checklist">체크리스트</button>
-              <button class="tabButton" data-tab="next">다음 질문</button>
+              <button class="tabButton" data-tab="next">상담 준비</button>
+              <button class="tabButton" data-tab="copy">HWP/Excel 복사용</button>
             </div>
             <div id="resultContent" class="resultContent">
               <p>상황을 입력하면 결과가 여기에 표시됩니다.</p>

@@ -10,14 +10,22 @@ export type IssueCardId =
 
 export interface IntakeInput {
   issueCard: IssueCardId;
+  intakeMode: 'guided' | 'open';
   businessType: string;
   stage: string;
+  stakeholder: string;
+  documentStatus: string;
+  interestIssue: string;
   question: string;
 }
 
 export interface IntakeResult {
   business_type: string;
   stage: string;
+  stakeholder: string;
+  document_status: string;
+  interest_issue: string;
+  intake_mode: 'guided' | 'open';
   issue_type: string[];
   urgency: '낮음' | '보통' | '높음';
   missing_info: string[];

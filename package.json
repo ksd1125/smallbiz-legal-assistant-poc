@@ -7,6 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node tests/static-docs-security.test.js && node tests/issue-catalog.test.js",
+    "test:catalog": "node tests/issue-catalog.test.js",
     "test:static": "node tests/static-docs-security.test.js",
     "typecheck": "tsc --noEmit"
   },
