@@ -16,6 +16,9 @@
 | `docs/architecture.md` | Agent API, Gemini 역할, 데이터 흐름 |
 | `docs/mcp-integration.md` | korean-law-mcp, lexguard-mcp, 국가법령정보 Open API 관계 |
 | `docs/source-policy.md` | 공식 출처, 개인정보, 법률정보 고지 |
+| `docs/index.html` | GitHub Pages용 정적 POC 화면 |
+| `docs/app.js` | 정적 POC 카드 입력, 검색 링크, API 설정 복사 |
+| `tests/static-docs-security.test.js` | 정적 POC 입력값 이스케이프 검증 |
 | `src/app/page.tsx` | 카드형 입력과 결과 탭 UI |
 | `src/app/api/config-status/route.ts` | API 키 환경변수 설정 여부 확인 |
 | `src/app/api/local-env/route.ts` | 로컬 개발환경 전용 `.env.local` 저장 |
@@ -41,4 +44,5 @@
 - "MCP를 쓰려면 어디를 보나?" → `docs/mcp-integration.md`
 - "법률 자문 오해 방지는 어디서 하나?" → `src/lib/safety/legalRiskGuard.ts`, `src/app/api/risk-check/route.ts`
 - "화면 카드는 어디서 바꾸나?" → `src/components/IssueCards.tsx`
+- "GitHub Pages 화면은 어디서 바꾸나?" → `docs/index.html`, `docs/styles.css`, `docs/app.js`
 - "새 작업 시작 시 무엇을 읽나?" → `WORKLOG.md`, `AGENTS.md`

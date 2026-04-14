@@ -13,6 +13,7 @@
 - API 설정 위치와 서버 인식 여부를 보여주는 설정 안내 패널
 - 법률 자문 오해 방지용 Risk Guard
 - GitHub/Codex 검색용 문서 인덱스
+- GitHub Pages용 정적 POC 화면
 
 ## 실행 방법
 
@@ -67,6 +68,8 @@ git push -u origin main
 - `docs/architecture.md`: Agent API 아키텍처
 - `docs/mcp-integration.md`: 국가법령정보 MCP 연동 방식
 - `docs/source-policy.md`: 출처와 보안 정책
+- `docs/index.html`: GitHub Pages용 정적 POC 화면
+- `tests/static-docs-security.test.js`: 정적 POC 입력값 이스케이프 검증
 
 ## 보안 원칙
 

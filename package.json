@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test:static": "node tests/static-docs-security.test.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -47,3 +47,9 @@
 - `/api/config-status`에서 `GEMINI_API_KEY`, `OPEN_LAW_OC`, `LAW_API_KEY`의 설정 여부만 반환하도록 했다.
 - 실제 API 키 값은 화면에 표시하지 않는다.
 - `복사` 버튼과 로컬 개발환경 전용 `.env.local` 저장 API를 추가했다.
+
+### GitHub Pages 정적 POC
+
+- `docs/index.html`, `docs/styles.css`, `docs/app.js`로 서버 없이 열 수 있는 정적 POC 화면을 추가했다.
+- GitHub Pages에서 API 키를 저장하지 않고 현재 브라우저 세션 입력값만 사용하도록 안내했다.
+- 정적 화면의 사용자 입력값이 HTML로 실행되지 않도록 `tests/static-docs-security.test.js` 검증을 추가했다.
