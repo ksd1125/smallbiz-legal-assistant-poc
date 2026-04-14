@@ -27,3 +27,10 @@
 3. `npm install` 후 `npm run typecheck`를 실행한다.
 4. Gemini API와 국가법령정보 Open API 환경변수를 `.env.local`에 설정한다.
 5. 카드형 입력에서 `/api/intake` 호출이 되는지 확인한다.
+
+### 검증 기록
+
+- `npm install` 실행 후 `next@14.2.5` 보안 경고가 확인되어 `next@16.2.3`으로 업데이트했다.
+- `npm.cmd audit --audit-level=low`: 취약점 0개.
+- `npm.cmd run typecheck`: TypeScript 검증 통과.
+- `git ls-remote https://github.com/ksd1125/smallbiz-legal-assistant-poc.git`: GitHub 원격 저장소가 아직 없어 `Repository not found`가 반환됐다.
