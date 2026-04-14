@@ -10,6 +10,7 @@
 - Gemini 기반 역할별 Agent API 초안
 - 국가법령정보 Open API 검색 클라이언트 초안
 - `korean-law-mcp` 또는 `lexguard-mcp` 연동을 위한 MCP 설계 문서
+- API 설정 위치와 서버 인식 여부를 보여주는 설정 안내 패널
 - 법률 자문 오해 방지용 Risk Guard
 - GitHub/Codex 검색용 문서 인덱스
 
@@ -35,6 +36,8 @@ KOREAN_LAW_MCP_URL=http://localhost:8096/mcp
 LEXGUARD_MCP_URL=http://localhost:9099/mcp
 LAW_API_KEY=
 ```
+
+웹 화면의 `API 설정 위치` 패널에서 `OPEN_LAW_OC`, `LAW_API_KEY`가 서버에 설정되었는지 확인할 수 있다. 패널은 값 자체를 보여주지 않고 설정 여부만 표시한다.
 
 브라우저에서 `http://localhost:3000`을 연다.
 

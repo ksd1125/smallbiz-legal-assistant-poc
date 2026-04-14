@@ -70,6 +70,59 @@ textarea {
   gap: 10px;
 }
 
+.setupGuide {
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 16px;
+}
+
+.setupGuide h2 {
+  margin-top: 0;
+}
+
+.setupGuide ol {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.statusBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.statusBadge {
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.statusBadge.ok {
+  background: #e1efe7;
+  color: var(--green);
+}
+
+.statusBadge.warn {
+  background: #f8eadf;
+  color: var(--red);
+}
+
+.envExample {
+  overflow-x: auto;
+  border-radius: 8px;
+  background: #202521;
+  color: #f7f7f2;
+  padding: 12px;
+}
+
+.providerLine {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
 .issueCard {
   min-height: 96px;
   padding: 14px;

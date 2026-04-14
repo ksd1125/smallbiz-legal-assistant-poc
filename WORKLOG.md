@@ -40,3 +40,9 @@
 - `korean-law-mcp`는 국가법령정보센터 Open API를 활용하는 MCP 서버로 확인했다.
 - 현재 POC는 국가법령정보 Open API 직접 호출 방식이며, MCP는 2단계 adapter로 붙이는 방향으로 정리했다.
 - `docs/mcp-integration.md`를 추가해 직접 API 방식과 MCP 경유 방식의 차이를 기록했다.
+
+### API 입력 위치 기능
+
+- 화면에 `API 설정 위치` 패널을 추가했다.
+- `/api/config-status`에서 `GEMINI_API_KEY`, `OPEN_LAW_OC`, `LAW_API_KEY`의 설정 여부만 반환하도록 했다.
+- 실제 API 키 값은 화면에 표시하지 않는다.

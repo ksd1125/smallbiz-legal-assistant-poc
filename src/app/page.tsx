@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ApiSetupGuide } from '@/components/ApiSetupGuide';
 import { GuidedIntake } from '@/components/GuidedIntake';
 import { IssueCards } from '@/components/IssueCards';
 import { ResultTabs } from '@/components/ResultTabs';
 import type {
   AnswerResult,
+  ConfigStatus,
   EvidenceResult,
   IntakeInput,
   IntakeResult,
@@ -39,6 +41,14 @@ export default function Home() {
   const [evidence, setEvidence] = useState<EvidenceResult>();
   const [answer, setAnswer] = useState<AnswerResult>();
   const [risk, setRisk] = useState<RiskCheckResult>();
+  const [configStatus, setConfigStatus] = useState<ConfigStatus>();
+
+  useEffect(() => {
+    fetch('/api/config-status')
+      .then((response) => response.json())
+      .then((status: ConfigStatus) => setConfigStatus(status))
+      .catch(() => setConfigStatus(undefined));
+  }, []);
 
   async function runFlow() {
     setLoading(true);
@@ -87,6 +97,7 @@ export default function Home() {
       <section className="workspace">
         <div className="leftPane">
           <h2>상황 선택</h2>
+          <ApiSetupGuide status={configStatus} />
           <IssueCards selected={input.issueCard} onSelect={(issueCard: IssueCardId) => setInput((current) => ({ ...current, issueCard }))} />
           <GuidedIntake {...input} loading={loading} onChange={(patch) => setInput((current) => ({ ...current, ...patch }))} onSubmit={runFlow} />
           {message ? <p className="statusLine">{message}</p> : null}

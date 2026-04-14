@@ -72,3 +72,12 @@ export interface RiskCheckResult {
   notice: string;
   final_answer_markdown: string;
 }
+
+export interface ConfigStatus {
+  geminiConfigured: boolean;
+  openLawConfigured: boolean;
+  lawApiKeyConfigured: boolean;
+  legalDataProvider: string;
+  koreanLawMcpUrl: string;
+  lexguardMcpUrl: string;
+}
