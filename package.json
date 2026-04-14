@@ -1,0 +1,23 @@
+{
+  "name": "smallbiz-legal-assistant-poc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "소상공인과 예비창업자를 위한 법률정보 도우미 POC",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "typescript": "5.5.3"
+  }
+}

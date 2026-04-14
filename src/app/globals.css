@@ -1,0 +1,204 @@
+:root {
+  --ink: #1d1d1b;
+  --muted: #575a5e;
+  --line: #d8d8d2;
+  --paper: #fbfbf7;
+  --panel: #ffffff;
+  --green: #2f6b4f;
+  --red: #a63d40;
+  --gold: #b28b20;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Arial, "Noto Sans KR", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.heroBand {
+  min-height: 220px;
+  display: flex;
+  align-items: end;
+  padding: 48px 32px 32px;
+  background: linear-gradient(120deg, #f7f7f2, #e7efe8);
+  border-bottom: 1px solid var(--line);
+}
+
+.heroBand h1 {
+  margin: 0 0 10px;
+  font-size: 40px;
+}
+
+.heroBand p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  gap: 28px;
+  padding: 28px 32px;
+}
+
+.leftPane,
+.rightPane {
+  min-width: 0;
+}
+
+.issueGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.issueCard {
+  min-height: 96px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  text-align: left;
+  cursor: pointer;
+}
+
+.issueCard strong,
+.issueCard span {
+  display: block;
+}
+
+.issueCard span {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.issueCard.selected {
+  border-color: var(--green);
+  box-shadow: inset 0 0 0 2px var(--green);
+}
+
+.intakeForm {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.intakeForm label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.intakeForm input,
+.intakeForm select,
+.intakeForm textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel);
+}
+
+.intakeForm textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.privacyNotice {
+  margin: 0;
+  color: var(--red);
+  line-height: 1.5;
+}
+
+.primaryButton {
+  min-height: 46px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.statusLine {
+  margin-top: 12px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.resultPanel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  padding: 22px;
+}
+
+.resultColumns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.resultColumns article {
+  min-width: 0;
+}
+
+.resultColumns h2 {
+  margin-top: 0;
+}
+
+.sourceList {
+  display: grid;
+  gap: 10px;
+}
+
+.sourceItem {
+  border-left: 4px solid var(--green);
+  padding-left: 12px;
+}
+
+.sourceItem strong,
+.sourceItem span {
+  display: block;
+}
+
+.sourceItem span {
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.gapBox {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+@media (max-width: 960px) {
+  .workspace,
+  .resultColumns {
+    grid-template-columns: 1fr;
+  }
+}
