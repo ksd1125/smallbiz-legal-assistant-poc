@@ -65,3 +65,12 @@
 - GitHub Pages 배포용 `docs` 정적 화면에도 오픈형/상황 카드형 UX와 HWP/Excel 복사용 결과를 반영했다.
 - GitHub Pages 정적 자산은 `docs\index.html`, `docs\css\styles.css`, `docs\js\app.js` 구조로 정리했다.
 - GitHub Pages는 별도 Actions 워크플로가 아니라 `Deploy from a branch → main → /docs` 방식으로 운영한다.
+
+### API 키/OC 입력과 버튼 무반응 원인 수정
+
+- `.env.local`에 `OPEN_LAW_OC`가 비어 있고 `LAW_API_KEY`에만 값이 있을 때 직접 Open Law 검색에서 OC가 전달되지 않는 문제를 확인했다.
+- `openlaw_direct` 방식에서도 `OPEN_LAW_OC`가 없으면 `LAW_API_KEY`를 OC fallback으로 사용하도록 수정했다.
+- API 설정 저장 시 직접 검색 방식에서 `OPEN_LAW_OC`가 비어 있고 `LAW_API_KEY`만 입력된 경우 `OPEN_LAW_OC`에도 같은 값을 저장하도록 보강했다.
+- 질문 입력칸이 비어 있으면 `법률정보 후보 찾기` 버튼이 비활성화되어 상황 카드만 선택한 사용자가 무반응처럼 느끼는 문제를 수정했다.
+- `tests/open-law-env.test.js`, `tests/guided-intake-submit.test.js`를 추가했다.
+- `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run build` 검증을 통과했다.

@@ -40,13 +40,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid LEGAL_DATA_PROVIDER.' }, { status: 400 });
   }
 
+  const openLawOc = cleanValue(body.openLawOc || (provider === 'openlaw_direct' ? body.lawApiKey : ''));
+  const lawApiKey = cleanValue(body.lawApiKey || openLawOc);
   const lines = [
     envLine('GEMINI_API_KEY', cleanValue(body.geminiApiKey)),
-    envLine('OPEN_LAW_OC', cleanValue(body.openLawOc)),
+    envLine('OPEN_LAW_OC', openLawOc),
     envLine('LEGAL_DATA_PROVIDER', provider),
     envLine('KOREAN_LAW_MCP_URL', cleanValue(body.koreanLawMcpUrl || 'http://localhost:8096/mcp')),
     envLine('LEXGUARD_MCP_URL', cleanValue(body.lexguardMcpUrl || 'http://localhost:9099/mcp')),
-    envLine('LAW_API_KEY', cleanValue(body.lawApiKey || body.openLawOc)),
+    envLine('LAW_API_KEY', lawApiKey),
     envLine('NEXT_PUBLIC_APP_NAME', '소상공인 법률정보 도우미')
   ];
 

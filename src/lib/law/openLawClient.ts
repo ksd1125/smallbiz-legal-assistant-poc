@@ -3,7 +3,7 @@ import type { LawSearchResult, LegalRouteResult } from '@/types/legalAssistant';
 const OPEN_LAW_BASE_URL = 'https://www.law.go.kr/DRF/lawSearch.do';
 
 export async function searchOpenLaw(query: LegalRouteResult['search_queries'][number]): Promise<LawSearchResult[]> {
-  const oc = process.env.OPEN_LAW_OC;
+  const oc = (process.env.OPEN_LAW_OC || process.env.LAW_API_KEY || '').trim();
   if (!oc) {
     return [{
       source: '국가법령정보',

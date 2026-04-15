@@ -109,7 +109,7 @@ export function GuidedIntake({
         <textarea value={question} onChange={(event) => onChange({ question: event.target.value })} placeholder="예: 상가 계약 전에 권리금과 원상복구를 어떻게 확인해야 하나요?" />
       </label>
       <p className="privacyNotice">주민등록번호, 계좌번호, 고객명, 계약서 원문, 내부 URL은 입력하지 마세요.</p>
-      <button className="primaryButton" type="submit" disabled={loading || question.trim().length === 0}>
+      <button className="primaryButton" type="submit" disabled={loading}>
         {loading ? '확인 중' : '법률정보 후보 찾기'}
       </button>
     </form>
