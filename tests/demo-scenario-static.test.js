@@ -41,4 +41,9 @@ assert(html.includes('질의 재작성'), 'demo should reflect query rewriting')
 assert(html.includes('출처 추적'), 'demo should reflect source provenance');
 assert(html.includes('평가 세트'), 'demo should reflect evaluation sets for quality control');
 assert(html.includes('사람 검수'), 'demo should reflect human review for legal templates and source use');
+assert(
+  html.includes("button.classList.contains('scenarioButton')") &&
+    html.includes("setScreen('general-screen')"),
+  'sidebar scenario buttons should switch to a visible answer screen when clicked'
+);
 assert(!html.includes('onerror='), 'demo should not include inline error handlers');

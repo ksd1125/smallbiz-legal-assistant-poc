@@ -1166,7 +1166,12 @@
       });
 
       document.querySelectorAll('[data-scenario]').forEach((button) => {
-        button.addEventListener('click', () => renderScenario(button.dataset.scenario));
+        button.addEventListener('click', () => {
+          renderScenario(button.dataset.scenario);
+          if (button.classList.contains('scenarioButton')) {
+            setScreen('general-screen');
+          }
+        });
       });
 
       document.querySelector('#generalAskButton').addEventListener('click', () => {
