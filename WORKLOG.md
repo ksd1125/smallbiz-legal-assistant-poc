@@ -74,3 +74,13 @@
 - 질문 입력칸이 비어 있으면 `법률정보 후보 찾기` 버튼이 비활성화되어 상황 카드만 선택한 사용자가 무반응처럼 느끼는 문제를 수정했다.
 - `tests/open-law-env.test.js`, `tests/guided-intake-submit.test.js`를 추가했다.
 - `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run build` 검증을 통과했다.
+
+### 실제 API 연결 테스트와 Gemini 응답 보강
+
+- 사용자가 로컬 `.env.local`에 API 값을 입력한 뒤 설정 여부를 값 노출 없이 확인했다.
+- `/api/config-status`에서 Gemini, 국가법령정보 OC, LAW_API_KEY가 모두 설정됨으로 확인됐다.
+- `/api/search-law`에서 국가법령정보 Open API 응답을 확인했다.
+- `/api/intake`에서 Gemini 호출은 성공했으나, 일부 Gemini JSON 응답이 중간에서 잘려 파싱 실패하는 현상을 확인했다.
+- Gemini 구조화 JSON 응답이 깨진 경우 한 번 재시도하고, 재시도 시 출력 토큰 한도를 늘리도록 보강했다.
+- Gemini 429/5xx 일시 오류는 한 번 재시도하도록 보강했다.
+- 이후 전체 흐름 재검증 중 Gemini `429 Too Many Requests`가 반환되어 추가 실사용 호출은 중단했다.
