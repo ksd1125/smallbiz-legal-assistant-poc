@@ -84,3 +84,12 @@
 - Gemini 구조화 JSON 응답이 깨진 경우 한 번 재시도하고, 재시도 시 출력 토큰 한도를 늘리도록 보강했다.
 - Gemini 429/5xx 일시 오류는 한 번 재시도하도록 보강했다.
 - 이후 전체 흐름 재검증 중 Gemini `429 Too Many Requests`가 반환되어 추가 실사용 호출은 중단했다.
+
+### Gemini 429 fallback 처리
+
+- 버튼 한 번에 Gemini가 여러 단계 호출되어 낮은 할당량 키에서 `429 Too Many Requests`가 쉽게 발생하는 구조를 확인했다.
+- Gemini 429가 발생해도 흐름이 멈추지 않도록 `localFallbacks.ts`를 추가했다.
+- Intake, Router, Answer, Risk Check API 라우트에서 429 발생 시 규칙 기반 기본 결과를 반환하도록 연결했다.
+- 국가법령정보 검색 결과는 계속 사용하고, Gemini 제한 시에는 공식 출처 후보, 체크리스트, 상담 준비 질문을 기본 형식으로 표시한다.
+- 실제 실행 중인 `localhost:3000` 서버에서 `intake → route → searchLaw → answer → risk` 전체 흐름 통과를 확인했다.
+- `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run build` 검증을 통과했다.
