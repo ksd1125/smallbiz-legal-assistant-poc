@@ -384,6 +384,99 @@
         font-weight: 700;
       }
 
+      .mappingGrid,
+      .dashboardGrid,
+      .pipelineGrid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .mappingItem,
+      .metricBox,
+      .queryBox,
+      .pipelineStep {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfb;
+        padding: 12px;
+      }
+
+      .mappingItem strong,
+      .metricBox strong,
+      .pipelineStep strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .mappingItem span,
+      .metricBox span,
+      .queryBox span,
+      .pipelineStep span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .dashboardStack {
+        display: grid;
+        gap: 16px;
+      }
+
+      .specialDashboard {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        overflow: hidden;
+      }
+
+      .dashboardBody {
+        padding: 16px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .dashboardSplit {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+        gap: 14px;
+      }
+
+      .dashboardTable {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .dashboardTable th,
+      .dashboardTable td {
+        border: 1px solid var(--line);
+        padding: 9px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .dashboardTable th {
+        background: #edf3f0;
+      }
+
+      .queryList {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .queryList li {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 9px 10px;
+        background: #fbfcfb;
+        color: #3f4c47;
+        line-height: 1.45;
+      }
+
       .detailGrid {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
@@ -458,7 +551,11 @@
         .routeGrid,
         .detailGrid,
         .qualityGrid,
-        .domains {
+        .domains,
+        .mappingGrid,
+        .dashboardGrid,
+        .pipelineGrid,
+        .dashboardSplit {
           grid-template-columns: 1fr;
         }
       }
@@ -516,7 +613,7 @@
                 <p>상권, 정책, 법률, 통계 중 무엇을 물어보는지 사용자가 먼저 고르지 않습니다.</p>
               </div>
               <div class="promptBody">
-                <textarea id="singlePrompt">서울에서 카페를 창업하려고 합니다. 후보 지역의 상권을 보고, 받을 수 있는 지원정책과 상가 계약 전 법률 체크사항, 관련 통계도 같이 알려주세요.</textarea>
+                <textarea id="singlePrompt">서울 마포구 연남동에서 파리바게트 같은 제과점 창업을 검토 중입니다. 상권 현황, 받을 수 있는 정책, 계약 전 법률 체크, 관련 조사자료를 같이 보고 싶습니다.</textarea>
                 <div class="chipRow">
                   <button class="chip" type="button">복합 질의</button>
                   <button class="chip" type="button">창업 전</button>
@@ -560,9 +657,9 @@
                 <p>도메인별 답변을 한 문맥으로 정리하고, 세부 검토가 필요한 항목은 각 AI 화면으로 연결합니다.</p>
               </div>
               <div class="integratedAnswer">
-                <div class="answerLine"><strong>요약:</strong> 카페 창업 질의는 상권 후보 비교, 지원정책 탐색, 상가임대차 체크, 지역 통계 확인이 함께 필요한 복합 질의입니다.</div>
-                <div class="answerLine"><strong>우선 확인:</strong> 후보 행정동, 예상 업종 코드, 계약서 초안 여부, 신청하려는 지원사업 유형을 추가로 확인하면 정확도가 올라갑니다.</div>
-                <div class="answerLine"><strong>출처 원칙:</strong> 정책은 소상공인24, 상권은 소상공인 365, 법률은 국가법령정보센터와 생활법령, 통계는 KOSIS 링크를 함께 표기합니다.</div>
+                <div class="answerLine"><strong>통합 판단:</strong> 이 화면은 깊은 분석을 끝까지 수행하지 않고, 브랜드·업종·지역을 해석해 어떤 전문 대시보드로 들어갈지 안내합니다.</div>
+                <div class="answerLine"><strong>요약:</strong> 파리바게트 질의는 제과점·프랜차이즈·음식점 계열로 추정되며 상권, 정책, 법률, 통계·보고서 확인이 모두 필요합니다.</div>
+                <div class="answerLine"><strong>다음 행동:</strong> 상권은 지역·업종 차트, 정책은 조건 매칭, 법률은 상황 체크, 통계는 KOSIS와 설문·결과보고서 탐색으로 이동합니다.</div>
               </div>
             </article>
           </section>
@@ -571,11 +668,11 @@
             <article class="domainTile">
               <div class="tileBody">
                 <div class="domainTitle"><h3>정책 AI</h3><span class="domainBadge policy">POLICY</span></div>
-                <p>소상공인24 공고를 수집해 지원대상, 신청기간, 신청 링크를 안내합니다.</p>
+                <p>통합 화면에서는 정책 세부로 들어갈 필요와 필요한 조건만 안내합니다.</p>
                 <ul>
-                  <li>지원사업 후보</li>
-                  <li>공고 원문 링크</li>
-                  <li>신청 페이지 바로가기</li>
+                  <li>필요 조건: 지역, 업종, 창업단계</li>
+                  <li>세부 기능: 정책 조건 매칭 대시보드</li>
+                  <li>결과물: 신청 가능·확인 필요·제외 분류</li>
                 </ul>
               </div>
               <button class="detailButton" type="button" data-domain="policy">정책 세부 보기</button>
@@ -584,11 +681,11 @@
             <article class="domainTile">
               <div class="tileBody">
                 <div class="domainTitle"><h3>상권 AI</h3><span class="domainBadge market">MARKET</span></div>
-                <p>소상공인 365 기반으로 업소, 매출, 유동인구를 해석하고 차트를 제공합니다.</p>
+                <p>통합 화면에서는 지역·업종을 상권 분석 기준으로 변환했는지 보여줍니다.</p>
                 <ul>
-                  <li>행정동 기반 상권 비교</li>
-                  <li>매출·유동인구 시각화</li>
-                  <li>자연어 분석 총평</li>
+                  <li>필요 조건: 행정동, 247개 업종 기준</li>
+                  <li>세부 기능: 상권 전문 대시보드</li>
+                  <li>결과물: 매출·유동인구·업소 현황 차트</li>
                 </ul>
               </div>
               <button class="detailButton" type="button" data-domain="market">상권 세부 보기</button>
@@ -610,15 +707,150 @@
             <article class="domainTile">
               <div class="tileBody">
                 <div class="domainTitle"><h3>통계 AI</h3><span class="domainBadge stats">STATS</span></div>
-                <p>KOSIS 국가승인통계와 통계 메타데이터를 찾아 공식 링크를 제공합니다.</p>
+                <p>통합 화면에서는 공식 통계와 설문·결과보고서 탐색 필요성을 안내합니다.</p>
                 <ul>
-                  <li>시계열 지표 안내</li>
-                  <li>공식 통계 링크</li>
-                  <li>수치 임의 생성 차단</li>
+                  <li>필요 조건: 지표, 기간, 지역 단위</li>
+                  <li>세부 기능: 통계·보고서 탐색 대시보드</li>
+                  <li>결과물: KOSIS·조사자료·원문 링크</li>
                 </ul>
               </div>
               <button class="detailButton" type="button" data-domain="stats">통계 세부 보기</button>
             </article>
+          </section>
+
+          <section class="panel" id="mappingPanel" aria-label="업종과 브랜드 매핑">
+            <div class="panelHeader">
+              <span class="kicker">NORMALIZATION</span>
+              <h2>업종·브랜드 매핑</h2>
+              <p>사용자는 브랜드나 일상 표현으로 입력하고, 시스템이 도메인별 기준으로 변환합니다.</p>
+            </div>
+            <div class="routeSteps">
+              <div class="mappingGrid">
+                <div class="mappingItem"><strong>사용자 표현</strong><span>파리바게트 같은 제과점 창업</span></div>
+                <div class="mappingItem"><strong>상권 기준</strong><span>행정동 기반 247개 업종 중 제과점 후보로 매핑</span></div>
+                <div class="mappingItem"><strong>정책 기준</strong><span>예비창업자, 음식점업 또는 소상공인 지원대상으로 매핑</span></div>
+                <div class="mappingItem"><strong>법률·통계 기준</strong><span>가맹사업, 상가임대차, 식품위생, 음식점업·제과점 지표 후보로 매핑</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="dashboardStack" aria-label="도메인별 전문 대시보드">
+            <article class="specialDashboard" id="marketDashboard">
+              <div class="panelHeader">
+                <span class="kicker">MARKET DASHBOARD</span>
+                <h2>상권 전문 대시보드</h2>
+                <p>지역과 업종을 클릭하면 행정동 기반 상권 현황을 차트와 표로 보고, 질의로 기간·비교지역·업종 기준을 바꿉니다.</p>
+              </div>
+              <div class="dashboardBody">
+                <div class="dashboardGrid">
+                  <div class="metricBox"><strong>지역</strong><span>서울 마포구 연남동</span></div>
+                  <div class="metricBox"><strong>상권 업종</strong><span>제과점 후보</span></div>
+                  <div class="metricBox"><strong>기간</strong><span>최근 12개월</span></div>
+                  <div class="metricBox"><strong>질의 예시</strong><span>최근 3년으로 보여줘</span></div>
+                </div>
+                <div class="dashboardSplit">
+                  <table class="dashboardTable">
+                    <thead><tr><th>지표</th><th>현재 화면</th><th>질의로 바뀌는 값</th></tr></thead>
+                    <tbody>
+                      <tr><td>업소 현황</td><td>동종 업소 수와 밀집도</td><td>카페 기준으로 다시 보기</td></tr>
+                      <tr><td>매출 추이</td><td>월별 매출 흐름</td><td>최근 3년 또는 전년 대비</td></tr>
+                      <tr><td>유동인구</td><td>요일·시간대별 유입</td><td>주말 중심 또는 평일 중심</td></tr>
+                    </tbody>
+                  </table>
+                  <ul class="queryList">
+                    <li>연남동과 망원동을 비교해줘</li>
+                    <li>주말 유동인구 기준으로 다시 보여줘</li>
+                    <li>제과점이 아니라 카페 업종으로 바꿔줘</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="specialDashboard" id="policyDashboard">
+              <div class="panelHeader">
+                <span class="kicker">POLICY DASHBOARD</span>
+                <h2>정책 조건 매칭 대시보드</h2>
+                <p>공고를 나열하는 화면이 아니라 사용자 조건과 공고 세부 기준의 부합여부를 맞춰가며 맞춤형 정책 정보를 제안합니다.</p>
+              </div>
+              <div class="dashboardBody">
+                <div class="dashboardGrid">
+                  <div class="metricBox"><strong>현재 조건</strong><span>서울, 제과점, 예비창업</span></div>
+                  <div class="metricBox"><strong>추가 답변</strong><span>사업자등록 전</span></div>
+                  <div class="metricBox"><strong>추천 상태</strong><span>신청 가능 2건, 확인 필요 1건</span></div>
+                  <div class="metricBox"><strong>다음 질문</strong><span>창업 예정일과 대표자 연령대</span></div>
+                </div>
+                <table class="dashboardTable">
+                  <thead><tr><th>정책 후보</th><th>매칭 결과</th><th>확인할 기준</th><th>액션</th></tr></thead>
+                  <tbody>
+                    <tr><td>예비창업 패키지</td><td>확인 필요</td><td>업종 제한, 사업자등록 여부</td><td>공고 원문 확인</td></tr>
+                    <tr><td>소상공인 컨설팅</td><td>신청 가능 후보</td><td>지역, 창업단계</td><td>신청 링크</td></tr>
+                    <tr><td>디지털 전환 지원</td><td>조건 보완 필요</td><td>온라인 판매 계획</td><td>추가 질문</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="specialDashboard" id="legalDashboard">
+              <div class="panelHeader">
+                <span class="kicker">LEGAL DASHBOARD</span>
+                <h2>법률 상황 체크 대시보드</h2>
+                <p>법률은 기존 법률 세부 목업처럼 상황을 좁혀가며 공식 근거, 체크리스트, 상담 연결을 제공합니다.</p>
+              </div>
+              <div class="dashboardBody">
+                <div class="dashboardGrid">
+                  <div class="metricBox"><strong>상황 유형</strong><span>가맹사업, 상가임대차, 식품위생</span></div>
+                  <div class="metricBox"><strong>현재 단계</strong><span>계약 전</span></div>
+                  <div class="metricBox"><strong>준비자료</strong><span>가맹계약서, 상가계약서 초안</span></div>
+                  <div class="metricBox"><strong>답변 경계</strong><span>법률 자문과 계약서 최종 검토 제외</span></div>
+                </div>
+                <ul class="queryList">
+                  <li>가맹계약서를 받았나요?</li>
+                  <li>상가계약서 초안에 원상복구와 업종 제한이 있나요?</li>
+                  <li>조리·판매 방식이 식품위생 신고 대상인가요?</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="specialDashboard" id="statsDashboard">
+              <div class="panelHeader">
+                <span class="kicker">STATS DASHBOARD</span>
+                <h2>통계·보고서 탐색 대시보드</h2>
+                <p>통계는 수치를 임의 생성하지 않고 KOSIS 공식 통계표, 설문·결과보고서, 조사자료를 찾아 요약과 링크를 제공합니다.</p>
+              </div>
+              <div class="dashboardBody">
+                <div class="dashboardSplit">
+                  <table class="dashboardTable">
+                    <thead><tr><th>자료 유형</th><th>제공 내용</th><th>주의</th></tr></thead>
+                    <tbody>
+                      <tr><td>KOSIS</td><td>음식점업·제과점 관련 통계표 후보와 링크</td><td>기준시점과 분류체계 확인</td></tr>
+                      <tr><td>설문·결과보고서</td><td>창업 애로, 경기 체감, 소비 동향 요약</td><td>원문 문항과 표본 확인</td></tr>
+                      <tr><td>외부 보고서</td><td>업종 트렌드와 지역경제 해석</td><td>발행기관과 발행일 확인</td></tr>
+                    </tbody>
+                  </table>
+                  <ul class="queryList">
+                    <li>최근 카페 창업 관련 조사자료 있어?</li>
+                    <li>소상공인 경기 체감 설문 결과만 요약해줘</li>
+                    <li>KOSIS에서 음식점업 사업체 수 통계표를 찾아줘</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel" id="pipelinePanel" aria-label="원천 데이터 처리와 멀티에이전트 흐름">
+            <div class="panelHeader">
+              <span class="kicker">PIPELINE</span>
+              <h2>수집 → 파싱 → 인덱싱 → 라우팅 → 에이전트 → 검증 → UI 렌더링</h2>
+              <p>사용자가 체감하는 질의형 대시보드는 원천 데이터 처리와 멀티에이전트 분업이 맞물려야 작동합니다.</p>
+            </div>
+            <div class="routeSteps">
+              <div class="pipelineGrid">
+                <div class="pipelineStep"><strong>수집·파싱</strong><span>정책 공고, 상권 DB, 법령, KOSIS, 설문·결과보고서를 구조화</span></div>
+                <div class="pipelineStep"><strong>인덱싱</strong><span>정형 데이터는 분석마트, 문서는 RAG 지식베이스, 정책은 조건 매칭 인덱스</span></div>
+                <div class="pipelineStep"><strong>업종 매핑 에이전트</strong><span>파리바게트 같은 브랜드를 제과점·프랜차이즈·음식점 계열로 변환</span></div>
+                <div class="pipelineStep"><strong>품질·출처 검증 에이전트</strong><span>근거 없는 수치와 출처 없는 답변을 차단하고 Fallback을 적용</span></div>
+              </div>
+            </div>
           </section>
 
           <section class="detailGrid" aria-label="도메인 세부 화면">
