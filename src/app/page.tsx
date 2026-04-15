@@ -12,10 +12,17 @@ import type {
   IntakeInput,
   IntakeResult,
   IssueCardId,
-  LawSearchResult,
   LegalRouteResult,
   RiskCheckResult
 } from '@/types/legalAssistant';
+
+interface KnowledgeAnswerApiResult {
+  intake: IntakeResult;
+  route: LegalRouteResult;
+  evidence: EvidenceResult;
+  answer: AnswerResult;
+  risk: RiskCheckResult;
+}
 
 async function postJson<T>(url: string, body: unknown): Promise<T> {
   const response = await fetch(url, {
@@ -61,30 +68,14 @@ export default function Home() {
 
   async function runFlow() {
     setLoading(true);
-    setMessage('상황을 구조화하는 중입니다.');
+    setMessage('SQLite 지식베이스에서 관련 법률정보를 찾는 중입니다.');
     try {
-      const intakeResult = await postJson<IntakeResult>('/api/intake', input);
-      setIntake(intakeResult);
-
-      setMessage('관련 법률 분야와 검색어를 만드는 중입니다.');
-      const routeResult = await postJson<LegalRouteResult>('/api/route-legal-issue', intakeResult);
-      setRoute(routeResult);
-
-      setMessage('국가법령정보 검색 후보를 확인하는 중입니다.');
-      const searchResults = await postJson<LawSearchResult[]>('/api/search-law', routeResult);
-
-      setMessage('쉬운 설명과 체크리스트를 작성하는 중입니다.');
-      const answerBundle = await postJson<{ evidence: EvidenceResult; answer: AnswerResult }>('/api/generate-answer', {
-        intake: intakeResult,
-        route: routeResult,
-        searchResults
-      });
-      setEvidence(answerBundle.evidence);
-      setAnswer(answerBundle.answer);
-
-      setMessage('법률 자문 오해 표현을 점검하는 중입니다.');
-      const riskResult = await postJson<RiskCheckResult>('/api/risk-check', answerBundle.answer);
-      setRisk(riskResult);
+      const bundle = await postJson<KnowledgeAnswerApiResult>('/api/knowledge-answer', input);
+      setIntake(bundle.intake);
+      setRoute(bundle.route);
+      setEvidence(bundle.evidence);
+      setAnswer(bundle.answer);
+      setRisk(bundle.risk);
       setMessage('확인이 끝났습니다.');
     } catch (error) {
       setMessage(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
