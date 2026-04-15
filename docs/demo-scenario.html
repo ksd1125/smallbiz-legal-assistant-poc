@@ -219,6 +219,47 @@
         padding-left: 20px;
       }
 
+      .wideInfo {
+        grid-column: 1 / -1;
+      }
+
+      .sourceMatrix {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      .sourceMatrix th,
+      .sourceMatrix td {
+        border: 1px solid var(--line);
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .sourceMatrix th {
+        background: #edf3f0;
+      }
+
+      .processList,
+      .techList {
+        display: grid;
+        gap: 8px;
+        margin: 10px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .processList li,
+      .techList li {
+        border-left: 4px solid var(--teal);
+        background: #f7faf8;
+        padding: 9px 10px;
+        line-height: 1.45;
+        font-size: 14px;
+      }
+
       .mainGrid {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
@@ -539,7 +580,7 @@
 
       .pipeline {
         display: grid;
-        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        grid-template-columns: repeat(6, minmax(120px, 1fr));
         gap: 10px;
       }
 
@@ -565,6 +606,10 @@
 
       .pipeBox:nth-child(5) {
         border-top: 4px solid var(--green);
+      }
+
+      .pipeBox:nth-child(6) {
+        border-top: 4px solid var(--steel);
       }
 
       .pipeBox h3 {
@@ -720,6 +765,53 @@
                 <li>공식근거가 부족한 항목은 답을 단정하지 않고 추가 질문이나 상담 연결로 넘김</li>
               </ul>
             </article>
+
+            <article class="infoCard wideInfo">
+              <h3>데이터 수급 현실성</h3>
+              <p>목업 단계에서도 “가능한 데이터”와 “검수 없이는 쓰기 어려운 데이터”를 구분합니다. 현재 POC는 SQLite seed 데이터로 흐름을 검증하고, 실서비스 후보는 공식 API와 승인된 공개문서만 단계적으로 넓힙니다.</p>
+              <table class="sourceMatrix">
+                <thead>
+                  <tr>
+                    <th>구분</th>
+                    <th>수급 후보</th>
+                    <th>처리 방식</th>
+                    <th>서비스 답변 범위</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>자동 수급 가능</td>
+                    <td>국가법령정보 Open API, 일부 공공데이터 API, 지방행정 인허가 데이터, 식품안전나라 공개 API</td>
+                    <td>정기 수집, 변경일 기준 업데이트, 조문·인허가 항목 정규화, 출처·시행일 저장. 지방행정 인허가 데이터는 기존 LOCALDATA 폐쇄 공지에 따라 공공데이터포털 전환 확인 후 연결</td>
+                    <td>관련 법령 후보, 인허가 확인 경로, 공식자료 링크</td>
+                  </tr>
+                  <tr>
+                    <td>반자동 수급·검수</td>
+                    <td>법무부 표준계약서, 고용노동부 표준근로계약서, 부처 안내서·FAQ, 생활법령 해설</td>
+                    <td>문서 등록, PDF/HWP 파싱, 저작권·이용조건 확인, 사람 검수 후 지식 단위 승인</td>
+                    <td>계약 전 체크리스트, 특약 검토 포인트, 준비서류, 상담 전 질문</td>
+                  </tr>
+                  <tr>
+                    <td>답변 제한</td>
+                    <td>권리금·임대료 적정성, 개별 계약 조항의 유불리, 인허가 가능 여부, 소송·해고 판단</td>
+                    <td>통계나 상담기관 연결은 가능하지만 정답처럼 생성하지 않도록 답변 차단 규칙 적용</td>
+                    <td>자료 준비 안내, 전문가 상담 연결, 추가 확인 질문</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+
+            <article class="infoCard wideInfo">
+              <h3>데이터 처리와 최신 기술 반영</h3>
+              <ol class="processList">
+                <li>출처 등록: 기관명, URL, 이용조건, 갱신주기, 적용 지역, 시행일, 수집일을 먼저 기록합니다.</li>
+                <li>파싱·정규화: 조문, 서식, 안내문을 소상공인 질문에 맞는 지식 단위로 나누고 업종·단계·위험요소 태그를 붙입니다.</li>
+                <li>검색 색인: SQLite 관계형 저장소에 원천과 버전을 남기고, 실서비스에서는 키워드 검색과 벡터 검색을 결합한 하이브리드 검색을 사용합니다.</li>
+                <li>라우터: 질의 재작성과 메타데이터 필터로 업종, 지역, 문서 유형, 시행일에 맞는 자료만 검색합니다.</li>
+                <li>답변 생성: 출처 추적, 근거 링크, 답변 가능 범위, 답변 제한 사유를 함께 표시합니다.</li>
+                <li>운영 검증: 대표 질문 평가 세트, 검색 점수, 무응답 사유, 사람 검수 이력을 남겨 품질을 반복 점검합니다.</li>
+              </ol>
+            </article>
           </div>
         </section>
 
@@ -858,15 +950,19 @@
                 <div class="pipeline">
                   <div class="pipeBox">
                     <h3>데이터 수급</h3>
-                    <p>국가법령정보, 생활법령정보, 부처 표준서식, 상담기관 안내를 수집합니다.</p>
+                    <p>국가법령정보 Open API, 지방행정 인허가 데이터, 식품안전나라, 부처 표준서식과 상담기관 안내를 구분해 수집합니다.</p>
                   </div>
                   <div class="pipeBox">
-                    <h3>파싱</h3>
-                    <p>자료명, 기관, URL, 조문, 체크리스트, 답변 가능 범위를 구조화합니다.</p>
+                    <h3>파싱·검수</h3>
+                    <p>자료명, 기관, URL, 조문, 시행일, 체크리스트, 이용조건, 답변 가능 범위를 구조화하고 사람 검수를 거칩니다.</p>
                   </div>
                   <div class="pipeBox">
                     <h3>SQLite 적재</h3>
-                    <p>source_documents, knowledge_units, scenario_rules, referral_channels로 저장합니다.</p>
+                    <p>source_documents, knowledge_units, scenario_rules, referral_channels에 출처 버전과 수집일을 저장합니다.</p>
+                  </div>
+                  <div class="pipeBox">
+                    <h3>하이브리드 검색</h3>
+                    <p>키워드 검색과 벡터 검색을 함께 쓰고, 메타데이터 필터와 질의 재작성으로 필요한 자료만 좁힙니다.</p>
                   </div>
                   <div class="pipeBox">
                     <h3>다중 분야 라우터</h3>
@@ -874,9 +970,15 @@
                   </div>
                   <div class="pipeBox">
                     <h3>에이전트 분배</h3>
-                    <p>상가임대차, 노무, 식품위생, 소비자, 제조업, 행정처분 에이전트가 각자 확인사항을 냅니다.</p>
+                    <p>상가임대차, 노무, 식품위생, 소비자, 제조업, 행정처분 에이전트가 출처 추적 가능한 확인사항을 냅니다.</p>
                   </div>
                 </div>
+
+                <ul class="techList">
+                  <li><strong>현재 POC:</strong> SQLite 기반 지식 단위와 규칙 라우터로 화면 흐름과 답변 구조를 검증합니다.</li>
+                  <li><strong>1차 확장:</strong> 공식 API와 승인된 공개문서를 배치 수집하고, 원문·파싱결과·검수상태를 분리해 관리합니다.</li>
+                  <li><strong>실서비스 후보:</strong> 하이브리드 검색, 메타데이터 필터, 질의 재작성, 출처 추적, 평가 세트, 사람 검수를 결합한 RAG 운영 구조로 전환합니다.</li>
+                </ul>
 
                 <table class="compareTable">
                   <thead>
