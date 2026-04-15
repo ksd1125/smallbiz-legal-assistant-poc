@@ -1,5 +1,11 @@
 # 작업 로그
 
+## 2026-04-15 시나리오 HTML 설명 창 추가
+
+- `docs/demo-scenario.html` 상단에 `서비스 설명` 버튼과 설명 패널을 추가했다.
+- 설명 패널에는 서비스 범위, 화면 구성, 제공하는 것, 제공하지 않는 것을 넣었다.
+- `tests/demo-scenario-static.test.js`에 설명 창 존재와 핵심 문구 검증을 추가했다.
+
 ## 2026-04-15 시나리오식 HTML 목업
 
 - `docs/demo-scenario.html`을 추가해 보고·설명용 단일 HTML 목업을 만들었다.

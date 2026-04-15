@@ -20,4 +20,11 @@ assert(html.includes('에이전트 분배'), 'internal view should show agent di
 assert(html.includes('카페 창업 전'), 'demo should include a cafe startup scenario');
 assert(html.includes('소규모 제조업 창업'), 'demo should include a manufacturing scenario');
 assert(html.includes('법률 자문'), 'demo should include service boundary wording');
+assert(html.includes('id="service-info-panel"'), 'demo should include a service information panel');
+assert(html.includes('id="serviceInfoButton"'), 'demo should include a button that opens the service information panel');
+assert(html.includes('서비스 범위'), 'service information panel should explain service scope');
+assert(html.includes('화면 구성'), 'service information panel should explain screen composition');
+assert(html.includes('제공하는 것'), 'service information panel should explain what the service provides');
+assert(html.includes('제공하지 않는 것'), 'service information panel should explain what the service does not provide');
+assert(html.includes('공식자료 기반'), 'service information panel should explain official-source grounding');
 assert(!html.includes('onerror='), 'demo should not include inline error handlers');

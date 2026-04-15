@@ -160,6 +160,65 @@
         font-size: 13px;
       }
 
+      .topActions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .infoButton {
+        border: 1px solid var(--teal);
+        background: #edf8f6;
+        color: var(--teal);
+        padding: 10px 12px;
+        font-weight: 700;
+      }
+
+      .infoPanel {
+        display: none;
+        background: #fdfefd;
+        border-bottom: 1px solid var(--line);
+        padding: 16px 22px;
+      }
+
+      .infoPanel.open {
+        display: block;
+      }
+
+      .infoPanelInner {
+        display: grid;
+        grid-template-columns: minmax(260px, 1fr) minmax(260px, 1fr);
+        gap: 14px;
+      }
+
+      .infoCard {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: var(--panel);
+      }
+
+      .infoCard h2,
+      .infoCard h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+
+      .infoCard p,
+      .infoCard li {
+        color: #3d4945;
+        line-height: 1.55;
+        font-size: 14px;
+      }
+
+      .infoCard ul,
+      .infoCard ol {
+        margin: 8px 0 0;
+        padding-left: 20px;
+      }
+
       .mainGrid {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
@@ -541,7 +600,8 @@
       @media (max-width: 1120px) {
         .app,
         .mainGrid,
-        .twoColumn {
+        .twoColumn,
+        .infoPanelInner {
           grid-template-columns: 1fr;
         }
 
@@ -560,6 +620,10 @@
         .topbar {
           align-items: stretch;
           flex-direction: column;
+        }
+
+        .topActions {
+          justify-content: flex-start;
         }
 
         .mainGrid {
@@ -610,8 +674,54 @@
             <h1>소상공인 법률·행정 사전점검 도우미</h1>
             <p>법령검색이 아니라 소상공인 상황을 분야별로 나눠 확인사항과 준비자료를 정리합니다.</p>
           </div>
-          <div class="notice">법률 자문, 계약서 최종 검토, 문서 작성 대행, 소송 가능성 판단은 제공하지 않습니다.</div>
+          <div class="topActions">
+            <button class="infoButton" id="serviceInfoButton" type="button" aria-controls="service-info-panel" aria-expanded="false">서비스 설명</button>
+            <div class="notice">법률 자문, 계약서 최종 검토, 문서 작성 대행, 소송 가능성 판단은 제공하지 않습니다.</div>
+          </div>
         </header>
+
+        <section class="infoPanel" id="service-info-panel" aria-label="서비스 범위와 구성 설명">
+          <div class="infoPanelInner">
+            <article class="infoCard">
+              <h2>서비스 범위</h2>
+              <p>이 화면은 소상공인·예비창업자의 창업과 운영 상황을 법률·행정 분야별로 나눠 사전점검하는 서비스 구상안입니다. 법령검색을 대신하기보다 공식자료 기반 확인사항, 준비자료, 상담기관을 정리합니다.</p>
+              <ul>
+                <li>대상: 카페, 음식점, 제조업, 온라인판매, 상가계약, 직원채용, 행정처분 상황</li>
+                <li>방식: 질문을 업종, 단계, 직원 수, 사업장, 위험요소, 문서상태로 구조화</li>
+                <li>결과: 관련 분야, 체크리스트, 추가 질문, 준비자료, 공식근거, 상담 연결</li>
+              </ul>
+            </article>
+
+            <article class="infoCard">
+              <h3>화면 구성</h3>
+              <ol>
+                <li>Codex형 일반 질의: 사용자가 무엇이든 질문하면 소상공인 관점으로 관련 분야를 먼저 정리합니다.</li>
+                <li>업종·상황 심화 점검: 업종군과 위험요소를 입력해 다중 분야 라우터 결과를 보여줍니다.</li>
+                <li>내부 데이터 흐름: 데이터 수급, 파싱, SQLite 적재, 라우터, 에이전트 분배 구조를 설명합니다.</li>
+              </ol>
+            </article>
+
+            <article class="infoCard">
+              <h3>제공하는 것</h3>
+              <ul>
+                <li>공식자료 기반 일반 설명과 체크리스트</li>
+                <li>상가임대차, 노무, 식품위생, 소비자, 제조업, 행정처분 등 관련 분야 분류</li>
+                <li>상담 전 준비할 계약서, 처분서, 영수증, 근로계약서, 사업자등록증 등 자료 목록</li>
+                <li>대한법률구조공단, 고용노동부 1350, 1372, 지자체, 비즈니스지원단 같은 연결 후보</li>
+              </ul>
+            </article>
+
+            <article class="infoCard">
+              <h3>제공하지 않는 것</h3>
+              <ul>
+                <li>개별 사건 법률 자문, 계약서 최종 검토, 문서 작성 대행</li>
+                <li>소송 가능성, 해고 가능 여부, 계약 해지 여부 같은 판단</li>
+                <li>세금 신고 대행, 임대료·권리금 적정성 단정, 인허가 가능 여부 확정</li>
+                <li>공식근거가 부족한 항목은 답을 단정하지 않고 추가 질문이나 상담 연결로 넘김</li>
+              </ul>
+            </article>
+          </div>
+        </section>
 
         <main class="mainGrid">
           <section class="stage" aria-label="서비스 목업">
@@ -945,6 +1055,12 @@
 
       document.querySelectorAll('[data-screen]').forEach((button) => {
         button.addEventListener('click', () => setScreen(button.dataset.screen));
+      });
+
+      document.querySelector('#serviceInfoButton').addEventListener('click', () => {
+        const panel = document.querySelector('#service-info-panel');
+        const isOpen = panel.classList.toggle('open');
+        document.querySelector('#serviceInfoButton').setAttribute('aria-expanded', String(isOpen));
       });
 
       document.querySelectorAll('[data-scenario]').forEach((button) => {
