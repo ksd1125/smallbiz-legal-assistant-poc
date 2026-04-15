@@ -13,6 +13,18 @@ assert(html.includes('id="advanced-screen"'), 'demo should include the advanced 
 assert(html.includes('id="inside-screen"'), 'demo should include the internal architecture screen');
 assert(html.includes('Codex형 일반 질의'), 'general screen should describe the Codex-style question UI');
 assert(html.includes('업종·상황 심화 점검'), 'advanced screen should describe the industry and situation flow');
+assert(html.includes('class="qaLayout"'), 'general screen should use a clear question and answer layout');
+assert(html.includes('class="questionPanel"'), 'general screen should visually separate the question area');
+assert(html.includes('class="answerPanel"'), 'general screen should visually separate the answer area');
+assert(html.includes('id="generalAnswerSummary"'), 'general answer should have a clear summary target');
+assert(html.includes('id="generalDomains"'), 'general answer should show related domains in a distinct area');
+assert(html.includes('id="generalNextActions"'), 'general answer should show next actions in a distinct area');
+assert(html.includes('class="advancedWorkspace"'), 'advanced screen should use a separated input and answer workspace');
+assert(html.includes('class="advancedInputPanel"'), 'advanced screen should visually separate structured inputs');
+assert(html.includes('class="advancedAnswerPanel"'), 'advanced screen should visually separate the advanced answer');
+assert(html.includes('id="advancedSummary"'), 'advanced answer should have a clear summary target');
+assert(html.includes('입력 조건'), 'advanced screen should label the structured input area');
+assert(html.includes('심화 답변'), 'advanced screen should label the answer area');
 assert(html.includes('데이터 수급'), 'internal view should show data supply');
 assert(html.includes('파싱'), 'internal view should show parsing');
 assert(html.includes('다중 분야 라우터'), 'internal view should show router behavior');
