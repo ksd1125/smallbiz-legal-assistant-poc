@@ -10,7 +10,7 @@
     "test": "node tests/static-docs-security.test.js && node tests/issue-catalog.test.js && node tests/open-law-env.test.js && node tests/guided-intake-submit.test.js && node tests/gemini-client.test.js && node tests/gemini-transient-error.test.js && node tests/local-fallbacks.test.js && npm.cmd run test:kb",
     "test:catalog": "node tests/issue-catalog.test.js",
     "test:kb": "node tests/kb-schema.test.js && node tests/kb-seed.test.js && node tests/kb-search.test.js && node tests/kb-answer.test.js && node tests/knowledge-answer-flow.test.js",
-    "test:static": "node tests/static-docs-security.test.js",
+    "test:static": "node tests/static-docs-security.test.js && node tests/demo-scenario-static.test.js",
     "kb:init": "node tests/run-kb-init.js",
     "kb:verify": "node tests/kb-search.test.js && node tests/kb-answer.test.js",
     "typecheck": "tsc --noEmit"

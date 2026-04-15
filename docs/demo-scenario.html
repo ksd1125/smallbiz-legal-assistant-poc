@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>소상공인 법률·행정 사전점검 시나리오 목업</title>
+    <meta name="description" content="소상공인 법률·행정 사전점검 서비스의 일반 질의 UI와 심화 시나리오, 내부 데이터 처리 흐름을 설명하는 정적 HTML 목업">
+    <style>
+      :root {
+        --bg: #f6f7f5;
+        --panel: #ffffff;
+        --ink: #1f2523;
+        --muted: #66716d;
+        --line: #d7ded9;
+        --teal: #0f766e;
+        --green: #2f7d32;
+        --coral: #c94f3d;
+        --yellow: #f2bd2f;
+        --steel: #536878;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif;
+        letter-spacing: 0;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+      }
+
+      .rail {
+        background: #202724;
+        color: #eef4ef;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .brand {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .brandMark {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: var(--teal);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .brand strong {
+        display: block;
+      }
+
+      .brand span,
+      .rail p {
+        color: #c5d3cc;
+        font-size: 13px;
+      }
+
+      .newThread {
+        border: 1px solid #58645f;
+        background: #2c3531;
+        color: #f8fbf8;
+        padding: 11px 12px;
+        text-align: left;
+      }
+
+      .railGroup {
+        display: grid;
+        gap: 8px;
+      }
+
+      .railGroup h2 {
+        color: #c5d3cc;
+        font-size: 13px;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .screenButton,
+      .scenarioButton {
+        border: 0;
+        background: transparent;
+        color: #eef4ef;
+        text-align: left;
+        padding: 10px;
+      }
+
+      .screenButton.active,
+      .scenarioButton.active {
+        background: #3b4742;
+      }
+
+      .content {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .topbar {
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+        padding: 14px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .topbar h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .topbar p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .notice {
+        max-width: 450px;
+        color: #5b352f;
+        background: #fff3df;
+        border: 1px solid #e7c483;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+      }
+
+      .mainGrid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+        gap: 18px;
+        padding: 18px;
+        min-height: 0;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .screen.active {
+        display: block;
+      }
+
+      .stage {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        min-height: calc(100vh - 112px);
+        overflow: hidden;
+      }
+
+      .stageHeader {
+        padding: 18px;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        gap: 6px;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--teal);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .stageHeader h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .stageHeader p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .chatWindow {
+        min-height: 500px;
+        padding: 20px;
+        display: grid;
+        grid-template-rows: 1fr auto;
+        gap: 16px;
+      }
+
+      .messages {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .message {
+        display: grid;
+        gap: 8px;
+        max-width: 760px;
+      }
+
+      .message.user {
+        justify-self: end;
+        text-align: right;
+      }
+
+      .bubble {
+        padding: 13px 14px;
+        border-radius: 8px;
+        line-height: 1.6;
+        background: #eef4ef;
+        border: 1px solid #d4ddd6;
+      }
+
+      .user .bubble {
+        background: #e6f2f1;
+        border-color: #b9dbd7;
+      }
+
+      .bubble strong {
+        color: #143f3a;
+      }
+
+      .composer {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        background: #fbfcfb;
+        display: grid;
+        gap: 10px;
+      }
+
+      .composer textarea {
+        width: 100%;
+        min-height: 96px;
+        resize: vertical;
+        border: 0;
+        outline: 0;
+        background: transparent;
+      }
+
+      .composerActions,
+      .chips,
+      .row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .primary,
+      .secondary,
+      .chip {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 9px 11px;
+      }
+
+      .primary {
+        background: var(--teal);
+        border-color: var(--teal);
+        color: white;
+      }
+
+      .secondary.active,
+      .chip.active {
+        border-color: var(--teal);
+        color: var(--teal);
+      }
+
+      .twoColumn {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .fieldGroup {
+        display: grid;
+        gap: 8px;
+      }
+
+      .fieldGroup label {
+        display: grid;
+        gap: 6px;
+        color: #33413d;
+        font-size: 14px;
+      }
+
+      .fieldGroup input,
+      .fieldGroup select,
+      .fieldGroup textarea {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+        background: #fbfcfb;
+        color: var(--ink);
+      }
+
+      .fieldGroup textarea {
+        min-height: 112px;
+        resize: vertical;
+      }
+
+      .resultBlocks {
+        display: grid;
+        gap: 12px;
+        padding: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .block {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 14px;
+        background: #fbfcfb;
+      }
+
+      .block h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+
+      .block ul,
+      .block ol {
+        margin: 8px 0 0;
+        padding-left: 20px;
+        line-height: 1.6;
+      }
+
+      .pillList {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .pill {
+        padding: 6px 9px;
+        border-radius: 8px;
+        background: #edf3f0;
+        border: 1px solid #d4ddd6;
+        font-size: 13px;
+      }
+
+      .pill.warn {
+        background: #fff3df;
+        border-color: #e7c483;
+      }
+
+      .inspector {
+        display: grid;
+        gap: 14px;
+      }
+
+      .inspectorPanel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .inspectorPanel h2 {
+        margin: 0;
+        padding: 15px 16px;
+        border-bottom: 1px solid var(--line);
+        font-size: 17px;
+      }
+
+      .flow {
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .flowStep {
+        border-left: 4px solid var(--teal);
+        background: #f7faf8;
+        padding: 10px 12px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .flowStep strong {
+        display: block;
+      }
+
+      .flowStep span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .sourceGrid,
+      .agentGrid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 14px;
+      }
+
+      .sourceItem,
+      .agentItem {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 11px;
+        background: #fbfcfb;
+      }
+
+      .sourceItem strong,
+      .agentItem strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .sourceItem span,
+      .agentItem span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .imageBand {
+        min-height: 168px;
+        background: #dce7e3;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .imageBand img {
+        width: 100%;
+        height: 168px;
+        object-fit: cover;
+      }
+
+      .imageBand p {
+        position: absolute;
+        left: 14px;
+        bottom: 12px;
+        margin: 0;
+        max-width: 75%;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-weight: 700;
+      }
+
+      .architectureBoard {
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .pipeline {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(120px, 1fr));
+        gap: 10px;
+      }
+
+      .pipeBox {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        min-height: 116px;
+        background: #fbfcfb;
+      }
+
+      .pipeBox:nth-child(2) {
+        border-top: 4px solid var(--yellow);
+      }
+
+      .pipeBox:nth-child(3) {
+        border-top: 4px solid var(--teal);
+      }
+
+      .pipeBox:nth-child(4) {
+        border-top: 4px solid var(--coral);
+      }
+
+      .pipeBox:nth-child(5) {
+        border-top: 4px solid var(--green);
+      }
+
+      .pipeBox h3 {
+        margin: 0 0 8px;
+        font-size: 15px;
+      }
+
+      .pipeBox p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 13px;
+      }
+
+      .compareTable {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .compareTable th,
+      .compareTable td {
+        border: 1px solid var(--line);
+        padding: 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .compareTable th {
+        background: #edf3f0;
+      }
+
+      @media (max-width: 1120px) {
+        .app,
+        .mainGrid,
+        .twoColumn {
+          grid-template-columns: 1fr;
+        }
+
+        .rail {
+          position: static;
+        }
+
+        .pipeline,
+        .sourceGrid,
+        .agentGrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .topbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .mainGrid {
+          padding: 10px;
+        }
+
+        .stage {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="rail" aria-label="목업 화면 선택">
+        <div class="brand">
+          <div class="brandMark">S</div>
+          <div>
+            <strong>Smallbiz Check</strong>
+            <span>법률·행정 사전점검</span>
+          </div>
+        </div>
+
+        <button class="newThread" type="button" data-screen="general-screen">새 질의 시작</button>
+
+        <section class="railGroup" aria-label="서비스 화면">
+          <h2>서비스 화면</h2>
+          <button class="screenButton active" type="button" data-screen="general-screen">Codex형 일반 질의</button>
+          <button class="screenButton" type="button" data-screen="advanced-screen">업종·상황 심화 점검</button>
+          <button class="screenButton" type="button" data-screen="inside-screen">내부 데이터 흐름</button>
+        </section>
+
+        <section class="railGroup" aria-label="시나리오">
+          <h2>시나리오</h2>
+          <button class="scenarioButton active" type="button" data-scenario="cafe">카페 창업 전</button>
+          <button class="scenarioButton" type="button" data-scenario="manufacturing">소규모 제조업 창업</button>
+          <button class="scenarioButton" type="button" data-scenario="lease">상가 계약 전</button>
+          <button class="scenarioButton" type="button" data-scenario="labor">아르바이트 채용</button>
+          <button class="scenarioButton" type="button" data-scenario="penalty">영업정지·과태료</button>
+        </section>
+
+        <p>이 목업은 설명용 정적 HTML입니다. API 키, 개인정보, 계약서 원문을 저장하지 않습니다.</p>
+      </aside>
+
+      <div class="content">
+        <header class="topbar">
+          <div>
+            <h1>소상공인 법률·행정 사전점검 도우미</h1>
+            <p>법령검색이 아니라 소상공인 상황을 분야별로 나눠 확인사항과 준비자료를 정리합니다.</p>
+          </div>
+          <div class="notice">법률 자문, 계약서 최종 검토, 문서 작성 대행, 소송 가능성 판단은 제공하지 않습니다.</div>
+        </header>
+
+        <main class="mainGrid">
+          <section class="stage" aria-label="서비스 목업">
+            <section class="screen active" id="general-screen">
+              <div class="stageHeader">
+                <p class="eyebrow">Screen 1</p>
+                <h2>Codex형 일반 질의</h2>
+                <p>첫 화면은 “무엇이든 물어보는” 채팅형 UI입니다. 사용자는 법령명이나 분야를 몰라도 질문을 입력하고, 서비스는 소상공인 관점으로 관련 분야와 추가 확인 질문을 정리합니다.</p>
+              </div>
+              <div class="chatWindow">
+                <div class="messages" id="chatMessages">
+                  <div class="message">
+                    <div class="bubble"><strong>안내</strong><br>소상공인 창업·운영 상황을 입력하면 관련 법률·행정 분야, 확인사항, 준비자료, 상담기관을 정리합니다.</div>
+                  </div>
+                  <div class="message user">
+                    <div class="bubble" id="sampleQuestion">카페를 열려고 하는데 상가 계약과 직원 채용, 영업신고를 같이 준비해야 합니다.</div>
+                  </div>
+                  <div class="message">
+                    <div class="bubble" id="generalAnswer"></div>
+                  </div>
+                </div>
+
+                <div class="composer" aria-label="일반 질의 입력">
+                  <textarea id="generalInput">카페를 열려고 하는데 상가 계약과 직원 채용, 영업신고를 같이 준비해야 합니다.</textarea>
+                  <div class="chips">
+                    <button class="chip active" type="button" data-scenario="cafe">카페 창업</button>
+                    <button class="chip" type="button" data-scenario="manufacturing">제조업 창업</button>
+                    <button class="chip" type="button" data-scenario="lease">상가 계약</button>
+                  </div>
+                  <div class="composerActions">
+                    <button class="primary" type="button" id="generalAskButton">사전점검 답변 보기</button>
+                    <button class="secondary" type="button" data-screen="advanced-screen">심화 입력으로 이동</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="screen" id="advanced-screen">
+              <div class="stageHeader">
+                <p class="eyebrow">Screen 2</p>
+                <h2>업종·상황 심화 점검</h2>
+                <p>두 번째 화면은 업종, 단계, 직원 수, 사업장, 판매방식, 위험요소를 구조화해 입력하고, 다중 분야 라우터가 어떤 분야를 켜는지 보여줍니다.</p>
+              </div>
+
+              <div class="twoColumn">
+                <div class="fieldGroup">
+                  <label>업종군
+                    <select id="industrySelect">
+                      <option value="cafe">음식점·카페</option>
+                      <option value="manufacturing">소규모 제조업</option>
+                      <option value="lease">상가 계약</option>
+                      <option value="labor">아르바이트 채용</option>
+                      <option value="penalty">영업정지·과태료</option>
+                    </select>
+                  </label>
+                  <label>사업 단계
+                    <select id="stageSelect">
+                      <option>창업 전</option>
+                      <option>계약 전</option>
+                      <option>운영 중</option>
+                      <option>처분서 수령</option>
+                    </select>
+                  </label>
+                  <label>직원 수
+                    <select id="staffSelect">
+                      <option>0명</option>
+                      <option>1~4명</option>
+                      <option>5~9명</option>
+                      <option>10명 이상</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="fieldGroup">
+                  <label>사업장 형태
+                    <select id="placeSelect">
+                      <option>상가 임차</option>
+                      <option>공장 임차</option>
+                      <option>공유주방</option>
+                      <option>온라인 전용</option>
+                    </select>
+                  </label>
+                  <label>위험요소
+                    <select id="riskSelect">
+                      <option>조리·위생</option>
+                      <option>제조설비·소음·분진</option>
+                      <option>직원 채용</option>
+                      <option>처분서·기한</option>
+                    </select>
+                  </label>
+                  <label>질문
+                    <textarea id="advancedQuestion">계약 전과 창업 전에 빠뜨릴 수 있는 법률·행정 확인사항을 알고 싶습니다.</textarea>
+                  </label>
+                </div>
+              </div>
+
+              <div class="resultBlocks">
+                <div class="row">
+                  <button class="primary" type="button" id="advancedRunButton">심화 사전점검 실행</button>
+                  <button class="secondary" type="button" data-screen="inside-screen">내부 흐름 보기</button>
+                </div>
+                <div class="block">
+                  <h3>관련 가능 분야</h3>
+                  <div class="pillList" id="advancedDomains"></div>
+                </div>
+                <div class="block">
+                  <h3>지금 확인할 사항</h3>
+                  <ul id="advancedChecklist"></ul>
+                </div>
+                <div class="block">
+                  <h3>추가 질문</h3>
+                  <ol id="advancedQuestions"></ol>
+                </div>
+                <div class="block">
+                  <h3>준비할 자료와 상담 연결</h3>
+                  <ul id="advancedReferrals"></ul>
+                </div>
+              </div>
+            </section>
+
+            <section class="screen" id="inside-screen">
+              <div class="stageHeader">
+                <p class="eyebrow">Inside</p>
+                <h2>내부 데이터 수급·파싱·라우터·에이전트 분배</h2>
+                <p>설명용 화면입니다. 사용자가 보는 답변 뒤에서 어떤 데이터와 규칙이 작동하는지 보여줍니다.</p>
+              </div>
+
+              <div class="architectureBoard">
+                <div class="imageBand">
+                  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80" alt="문서와 노트북을 놓고 업무 흐름을 검토하는 장면">
+                  <p>공식자료를 모아 상황별 지식 단위로 바꾸고, 라우터가 필요한 분야를 선택합니다.</p>
+                </div>
+
+                <div class="pipeline">
+                  <div class="pipeBox">
+                    <h3>데이터 수급</h3>
+                    <p>국가법령정보, 생활법령정보, 부처 표준서식, 상담기관 안내를 수집합니다.</p>
+                  </div>
+                  <div class="pipeBox">
+                    <h3>파싱</h3>
+                    <p>자료명, 기관, URL, 조문, 체크리스트, 답변 가능 범위를 구조화합니다.</p>
+                  </div>
+                  <div class="pipeBox">
+                    <h3>SQLite 적재</h3>
+                    <p>source_documents, knowledge_units, scenario_rules, referral_channels로 저장합니다.</p>
+                  </div>
+                  <div class="pipeBox">
+                    <h3>다중 분야 라우터</h3>
+                    <p>업종, 단계, 직원 수, 위험요소, 문서상태를 기준으로 여러 분야를 동시에 선택합니다.</p>
+                  </div>
+                  <div class="pipeBox">
+                    <h3>에이전트 분배</h3>
+                    <p>상가임대차, 노무, 식품위생, 소비자, 제조업, 행정처분 에이전트가 각자 확인사항을 냅니다.</p>
+                  </div>
+                </div>
+
+                <table class="compareTable">
+                  <thead>
+                    <tr>
+                      <th>구분</th>
+                      <th>법제처 Lawbot</th>
+                      <th>이 서비스</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>핵심 역할</td>
+                      <td>일상 질문으로 법령정보 검색</td>
+                      <td>소상공인 상황을 분야별로 분해해 사전점검</td>
+                    </tr>
+                    <tr>
+                      <td>결과물</td>
+                      <td>법령·조문·제도 검색 결과</td>
+                      <td>체크리스트, 추가 질문, 준비자료, 상담기관</td>
+                    </tr>
+                    <tr>
+                      <td>경계</td>
+                      <td>법령정보 검색</td>
+                      <td>법률 자문, 문서 작성, 개별 판단 제외</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <aside class="inspector" aria-label="내부 설명 패널">
+            <section class="inspectorPanel">
+              <h2>현재 시나리오 처리 흐름</h2>
+              <div class="flow" id="flowSteps"></div>
+            </section>
+
+            <section class="inspectorPanel">
+              <h2>데이터 수급</h2>
+              <div class="sourceGrid" id="sourceGrid"></div>
+            </section>
+
+            <section class="inspectorPanel">
+              <h2>에이전트 분배</h2>
+              <div class="agentGrid" id="agentGrid"></div>
+            </section>
+          </aside>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const scenarios = {
+        cafe: {
+          label: '카페 창업 전',
+          question: '카페를 열려고 하는데 상가 계약과 직원 채용, 영업신고를 같이 준비해야 합니다.',
+          summary: '카페 창업 전에는 상가임대차, 식품위생, 노무, 소비자 응대, 사업자등록을 함께 확인해야 합니다.',
+          domains: ['상가임대차', '식품위생', '노무', '소비자·환불', '사업자등록'],
+          checklist: ['계약서 초안의 보증금, 월차임, 관리비, 원상복구 조건 확인', '영업신고 대상과 위생교육 수료 여부 확인', '직원 채용 예정이면 근로계약서와 최저임금 기준 확인', '배달·온라인 판매 예정이면 환불·표시 기준 확인'],
+          questions: ['조리식품을 판매하나요?', '직원을 몇 명 채용하나요?', '계약서 초안이 있나요?', '배달 또는 온라인 판매를 하나요?'],
+          referrals: ['지자체 위생과', '고용노동부 1350', '대한법률구조공단', '1372 소비자상담센터'],
+          sources: ['국가법령정보', '법무부 표준계약서', '식품안전나라', '고용노동부 1350'],
+          agents: ['상가임대차 에이전트', '식품위생 에이전트', '노무 에이전트', '소비자 에이전트']
+        },
+        manufacturing: {
+          label: '소규모 제조업 창업',
+          question: '작은 제조업을 시작하려는데 공장, 직원, 환경, 제품 인증을 어디까지 확인해야 하나요?',
+          summary: '소규모 제조업은 공장·입지, 환경, 산업안전, 노무, 제품인증, 납품계약을 먼저 나눠 확인해야 합니다.',
+          domains: ['공장·입지', '환경', '산업안전', '노무', '제품인증', '납품계약'],
+          checklist: ['건축물 용도와 공장 등록 필요성 확인', '폐수, 분진, 소음, 화학물질 사용 여부 확인', '기계설비와 보호구, 안전보건교육 필요성 확인', '직원 채용 시 근로계약서와 임금 기준 확인', '제품별 KC, 표시기준, 납품계약 조건 확인'],
+          questions: ['무엇을 제조하나요?', '화학물질이나 도료를 사용하나요?', '폐수·분진·소음이 발생하나요?', '소비자에게 직접 판매하나요, 기업에 납품하나요?'],
+          referrals: ['중기부 비즈니스지원단', '지자체 기업지원과', '고용노동부 1350', '환경 담당 부서'],
+          sources: ['국가법령정보', '중기부 비즈니스지원단', '고용노동부 자료', '제품안전 관련 부처 자료'],
+          agents: ['제조업 라우터', '환경 에이전트', '산업안전 에이전트', '노무 에이전트', '제품인증 에이전트']
+        },
+        lease: {
+          label: '상가 계약 전',
+          question: '상가 계약서 초안에 특약과 관리비, 원상복구를 어떻게 확인해야 하나요?',
+          summary: '상가 계약 전에는 표준계약서 항목, 관리비 세부내역, 권리금, 원상복구, 업종 제한을 확인합니다.',
+          domains: ['상가임대차', '계약 일반', '권리금', '관리비', '상담 연결'],
+          checklist: ['보증금, 월차임, 관리비, 부가세 구분 확인', '원상복구 범위와 사진 증빙 확보', '권리금과 시설 인수 범위 확인', '업종 제한과 인허가 가능성 확인'],
+          questions: ['계약서 초안이 있나요?', '권리금 또는 시설 인수금이 있나요?', '관리비 세부내역이 표시되어 있나요?', '기존 시설 사진이 있나요?'],
+          referrals: ['대한법률구조공단', '상가임대차분쟁조정위원회', '공인중개사', '법무부 표준계약서'],
+          sources: ['법무부 상가건물임대차표준계약서', '법무부 묻고답하기 40선', '국가법령정보', '생활법령정보'],
+          agents: ['상가임대차 에이전트', '계약 체크 에이전트', '권리금 에이전트', '상담 연결 에이전트']
+        },
+        labor: {
+          label: '아르바이트 채용',
+          question: '아르바이트를 채용하려는데 근로계약서와 주휴수당을 어떻게 확인해야 하나요?',
+          summary: '아르바이트 채용 전에는 근로계약서, 최저임금, 근로시간, 휴게시간, 주휴수당, 임금명세서를 확인합니다.',
+          domains: ['노무', '최저임금', '근로계약', '임금명세서'],
+          checklist: ['근로계약서에 임금, 근로시간, 휴게, 업무내용 기재', '해당 연도 최저임금 이상 지급 확인', '주휴수당 발생 가능성 확인', '임금 지급일과 임금명세서 준비'],
+          questions: ['주 몇 시간 근무하나요?', '근무 요일이 고정되어 있나요?', '직원이 총 몇 명인가요?', '시급과 휴게시간은 어떻게 정했나요?'],
+          referrals: ['고용노동부 1350', '노무사', '고용노동부 표준근로계약서'],
+          sources: ['근로기준법', '최저임금법', '고용노동부 1350', '표준근로계약서'],
+          agents: ['노무 에이전트', '임금 에이전트', '근로시간 에이전트']
+        },
+        penalty: {
+          label: '영업정지·과태료',
+          question: '영업정지 처분서를 받았는데 무엇부터 확인해야 하나요?',
+          summary: '처분서를 받으면 수령일, 의견제출 기한, 처분 사유, 적용 법령, 증빙자료를 먼저 확인해야 합니다.',
+          domains: ['행정처분', '식품위생', '의견제출', '상담 연결'],
+          checklist: ['처분서 수령일과 의견제출 마감일 확인', '처분 사유와 적용 법령 확인', '사실관계가 다른 부분의 증빙 정리', '기한이 있는 불복 절차 확인'],
+          questions: ['처분서 수령일은 언제인가요?', '처분명과 처분 사유가 무엇인가요?', '제출 가능한 증빙자료가 있나요?', '영업에 즉시 영향이 있나요?'],
+          referrals: ['지자체 담당 부서', '대한법률구조공단', '행정사 또는 변호사', '고용노동부 1350'],
+          sources: ['행정절차법', '개별법 처분기준', '지자체 안내', '국가법령정보'],
+          agents: ['행정처분 에이전트', '기한관리 에이전트', '증빙정리 에이전트']
+        }
+      };
+
+      let currentScenario = 'cafe';
+
+      function escapeText(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        })[char]);
+      }
+
+      function setScreen(screenId) {
+        document.querySelectorAll('.screen').forEach((screen) => {
+          screen.classList.toggle('active', screen.id === screenId);
+        });
+        document.querySelectorAll('.screenButton').forEach((button) => {
+          button.classList.toggle('active', button.dataset.screen === screenId);
+        });
+      }
+
+      function renderScenario(key) {
+        currentScenario = key;
+        const scenario = scenarios[key];
+        document.querySelectorAll('.scenarioButton, .chip').forEach((button) => {
+          button.classList.toggle('active', button.dataset.scenario === key);
+        });
+        document.querySelector('#generalInput').value = scenario.question;
+        document.querySelector('#sampleQuestion').textContent = scenario.question;
+        document.querySelector('#generalAnswer').innerHTML = `
+          <strong>${escapeText(scenario.label)} 사전점검</strong><br>
+          ${escapeText(scenario.summary)}<br><br>
+          관련 가능 분야: ${scenario.domains.map(escapeText).join(', ')}<br>
+          다음 단계는 추가 질문과 준비자료를 확인하는 것입니다.
+        `;
+        document.querySelector('#industrySelect').value = key;
+        renderAdvanced(scenario);
+        renderInspector(scenario);
+      }
+
+      function renderAdvanced(scenario) {
+        document.querySelector('#advancedDomains').innerHTML = scenario.domains.map((item) => `<span class="pill">${escapeText(item)}</span>`).join('');
+        document.querySelector('#advancedChecklist').innerHTML = scenario.checklist.map((item) => `<li>${escapeText(item)}</li>`).join('');
+        document.querySelector('#advancedQuestions').innerHTML = scenario.questions.map((item) => `<li>${escapeText(item)}</li>`).join('');
+        document.querySelector('#advancedReferrals').innerHTML = scenario.referrals.map((item) => `<li>${escapeText(item)}</li>`).join('');
+      }
+
+      function renderInspector(scenario) {
+        const flow = [
+          ['사용자 입력', scenario.label],
+          ['상황 구조화', '업종, 단계, 직원 수, 위험요소, 문서상태를 추출'],
+          ['다중 분야 라우터', scenario.domains.join(' / ')],
+          ['에이전트 분배', scenario.agents.join(' / ')],
+          ['최종 출력', '체크리스트, 추가 질문, 준비자료, 공식근거, 상담기관']
+        ];
+        document.querySelector('#flowSteps').innerHTML = flow.map(([title, text]) => `
+          <div class="flowStep"><strong>${escapeText(title)}</strong><span>${escapeText(text)}</span></div>
+        `).join('');
+        document.querySelector('#sourceGrid').innerHTML = scenario.sources.map((item) => `
+          <div class="sourceItem"><strong>${escapeText(item)}</strong><span>공식자료 기반 지식 단위로 변환</span></div>
+        `).join('');
+        document.querySelector('#agentGrid').innerHTML = scenario.agents.map((item) => `
+          <div class="agentItem"><strong>${escapeText(item)}</strong><span>답변 가능 범위와 상담 연결 기준을 확인</span></div>
+        `).join('');
+      }
+
+      document.querySelectorAll('[data-screen]').forEach((button) => {
+        button.addEventListener('click', () => setScreen(button.dataset.screen));
+      });
+
+      document.querySelectorAll('[data-scenario]').forEach((button) => {
+        button.addEventListener('click', () => renderScenario(button.dataset.scenario));
+      });
+
+      document.querySelector('#generalAskButton').addEventListener('click', () => {
+        const input = document.querySelector('#generalInput').value.trim();
+        const scenario = scenarios[currentScenario];
+        document.querySelector('#sampleQuestion').textContent = input || scenario.question;
+        renderScenario(currentScenario);
+      });
+
+      document.querySelector('#advancedRunButton').addEventListener('click', () => {
+        const selected = document.querySelector('#industrySelect').value;
+        renderScenario(selected);
+      });
+
+      document.querySelector('#industrySelect').addEventListener('change', (event) => {
+        renderScenario(event.target.value);
+      });
+
+      renderScenario(currentScenario);
+    </script>
+  </body>
+</html>
