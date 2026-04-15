@@ -25,6 +25,14 @@ assert(html.includes('class="advancedAnswerPanel"'), 'advanced screen should vis
 assert(html.includes('id="advancedSummary"'), 'advanced answer should have a clear summary target');
 assert(html.includes('입력 조건'), 'advanced screen should label the structured input area');
 assert(html.includes('심화 답변'), 'advanced screen should label the answer area');
+assert(html.includes('필수 입력'), 'advanced screen should distinguish required inputs');
+assert(html.includes('선택 입력'), 'advanced screen should keep non-required inputs optional');
+assert(html.includes('id="optionalDetailToggle"'), 'advanced screen should include a toggle for optional details');
+assert(html.includes('id="optionalDetails"'), 'advanced screen should include a collapsible optional detail area');
+assert(html.includes('더 정확히 답하기 위한 질문'), 'advanced answer should ask follow-up questions instead of requiring all inputs upfront');
+assert(html.includes('id="advancedAssumptions"'), 'advanced answer should show inferred assumptions');
+assert(html.includes('id="followupQuestions"'), 'advanced answer should render follow-up questions');
+assert(html.includes("optionalDetails.hidden = !isOpen"), 'optional details should be collapsible in the demo script');
 assert(html.includes('데이터 수급'), 'internal view should show data supply');
 assert(html.includes('파싱'), 'internal view should show parsing');
 assert(html.includes('다중 분야 라우터'), 'internal view should show router behavior');

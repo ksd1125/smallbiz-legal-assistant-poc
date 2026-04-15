@@ -453,6 +453,20 @@
         gap: 8px;
       }
 
+      .fieldGroup.optional {
+        border-top: 1px solid var(--line);
+        padding-top: 12px;
+      }
+
+      .optionalToggle {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .optionalDetails[hidden] {
+        display: none;
+      }
+
       .fieldGroup label {
         display: grid;
         gap: 6px;
@@ -475,6 +489,17 @@
         resize: vertical;
       }
 
+      .inputBadge {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 8px;
+        padding: 4px 7px;
+        background: #edf3f0;
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
       .pillList {
         display: flex;
         gap: 8px;
@@ -492,6 +517,22 @@
       .pill.warn {
         background: #fff3df;
         border-color: #e7c483;
+      }
+
+      .followupList {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .followupList li {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 11px;
+        background: #fbfcfb;
+        line-height: 1.45;
       }
 
       .inspector {
@@ -899,10 +940,11 @@
                   <div class="panelHeader">
                     <span class="panelKicker">INPUT</span>
                     <h3>입력 조건</h3>
-                    <p>업종과 사업 상황을 구조화하면 답변 영역에서 관련 분야와 준비할 자료가 바로 정리됩니다.</p>
+                    <p>필수 입력만 먼저 받고, 부족한 정보는 답변 안의 후속 질문으로 보완합니다.</p>
                   </div>
                   <div class="advancedForm">
                     <div class="fieldGroup">
+                      <span class="inputBadge">필수 입력</span>
                       <label>업종군
                         <select id="industrySelect">
                           <option value="cafe">음식점·카페</option>
@@ -912,8 +954,16 @@
                           <option value="penalty">영업정지·과태료</option>
                         </select>
                       </label>
+                      <label>질문
+                        <textarea id="advancedQuestion">계약 전과 창업 전에 빠뜨릴 수 있는 법률·행정 확인사항을 알고 싶습니다.</textarea>
+                      </label>
+                    </div>
+                    <button class="secondary optionalToggle" type="button" id="optionalDetailToggle" aria-controls="optionalDetails" aria-expanded="false">선택 입력 열기</button>
+                    <div class="fieldGroup optional optionalDetails" id="optionalDetails" hidden>
+                      <span class="inputBadge">선택 입력</span>
                       <label>사업 단계
                         <select id="stageSelect">
+                          <option>모름</option>
                           <option>창업 전</option>
                           <option>계약 전</option>
                           <option>운영 중</option>
@@ -922,6 +972,7 @@
                       </label>
                       <label>직원 수
                         <select id="staffSelect">
+                          <option>모름</option>
                           <option>0명</option>
                           <option>1~4명</option>
                           <option>5~9명</option>
@@ -930,6 +981,7 @@
                       </label>
                       <label>사업장 형태
                         <select id="placeSelect">
+                          <option>모름</option>
                           <option>상가 임차</option>
                           <option>공장 임차</option>
                           <option>공유주방</option>
@@ -938,14 +990,12 @@
                       </label>
                       <label>위험요소
                         <select id="riskSelect">
+                          <option>모름</option>
                           <option>조리·위생</option>
                           <option>제조설비·소음·분진</option>
                           <option>직원 채용</option>
                           <option>처분서·기한</option>
                         </select>
-                      </label>
-                      <label>질문
-                        <textarea id="advancedQuestion">계약 전과 창업 전에 빠뜨릴 수 있는 법률·행정 확인사항을 알고 싶습니다.</textarea>
                       </label>
                     </div>
                     <div class="composerActions">
@@ -971,12 +1021,16 @@
                       <div class="pillList" id="advancedDomains"></div>
                     </div>
                     <div class="answerSection">
+                      <h4>추정한 상황</h4>
+                      <ul id="advancedAssumptions"></ul>
+                    </div>
+                    <div class="answerSection">
                       <h4>지금 확인할 사항</h4>
                       <ul id="advancedChecklist"></ul>
                     </div>
                     <div class="answerSection">
-                      <h4>추가 질문</h4>
-                      <ol id="advancedQuestions"></ol>
+                      <h4>더 정확히 답하기 위한 질문</h4>
+                      <ul class="followupList" id="followupQuestions"></ul>
                     </div>
                     <div class="answerSection">
                       <h4>준비할 자료와 상담 연결</h4>
@@ -1187,12 +1241,27 @@
       }
 
       function renderAdvanced(scenario) {
+        const stage = document.querySelector('#stageSelect').value;
+        const staff = document.querySelector('#staffSelect').value;
+        const place = document.querySelector('#placeSelect').value;
+        const risk = document.querySelector('#riskSelect').value;
+        const knownDetails = [
+          ['사업 단계', stage],
+          ['직원 수', staff],
+          ['사업장 형태', place],
+          ['위험요소', risk]
+        ].filter(([, value]) => value !== '모름');
+        const assumptions = knownDetails.length
+          ? knownDetails.map(([label, value]) => `${label}: ${value}`)
+          : [`${scenario.label} 질문으로 분류`, '세부 조건은 아직 입력되지 않아 일반적인 사전점검 기준으로 안내'];
+
         document.querySelector('#advancedSelectedLabel').textContent = `${scenario.label} 조건으로 점검 중입니다.`;
         document.querySelector('#advancedAnswerTitle').textContent = `${scenario.label} 사전점검`;
         document.querySelector('#advancedSummary').textContent = scenario.summary;
         document.querySelector('#advancedDomains').innerHTML = scenario.domains.map((item) => `<span class="pill">${escapeText(item)}</span>`).join('');
+        document.querySelector('#advancedAssumptions').innerHTML = assumptions.map((item) => `<li>${escapeText(item)}</li>`).join('');
         document.querySelector('#advancedChecklist').innerHTML = scenario.checklist.map((item) => `<li>${escapeText(item)}</li>`).join('');
-        document.querySelector('#advancedQuestions').innerHTML = scenario.questions.map((item) => `<li>${escapeText(item)}</li>`).join('');
+        document.querySelector('#followupQuestions').innerHTML = scenario.questions.slice(0, 3).map((item) => `<li>${escapeText(item)}</li>`).join('');
         document.querySelector('#advancedReferrals').innerHTML = scenario.referrals.map((item) => `<li>${escapeText(item)}</li>`).join('');
       }
 
@@ -1225,6 +1294,14 @@
         document.querySelector('#serviceInfoButton').setAttribute('aria-expanded', String(isOpen));
       });
 
+      document.querySelector('#optionalDetailToggle').addEventListener('click', () => {
+        const optionalDetails = document.querySelector('#optionalDetails');
+        const isOpen = optionalDetails.hidden;
+        optionalDetails.hidden = !isOpen;
+        document.querySelector('#optionalDetailToggle').setAttribute('aria-expanded', String(isOpen));
+        document.querySelector('#optionalDetailToggle').textContent = isOpen ? '선택 입력 닫기' : '선택 입력 열기';
+      });
+
       document.querySelectorAll('[data-scenario]').forEach((button) => {
         button.addEventListener('click', () => {
           renderScenario(button.dataset.scenario);
@@ -1247,6 +1324,12 @@
 
       document.querySelector('#industrySelect').addEventListener('change', (event) => {
         renderScenario(event.target.value);
+      });
+
+      ['#stageSelect', '#staffSelect', '#placeSelect', '#riskSelect'].forEach((selector) => {
+        document.querySelector(selector).addEventListener('change', () => {
+          renderAdvanced(scenarios[currentScenario]);
+        });
       });
 
       renderScenario(currentScenario);
