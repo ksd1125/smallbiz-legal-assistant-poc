@@ -1,5 +1,13 @@
 # 작업 로그
 
+## 2026-04-15 SQLite 지식베이스 1차 구현
+
+- 국가법령정보 API를 답변 시점 실시간 조회가 아니라 SQLite 지식베이스 갱신용으로 쓰는 구조를 적용했다.
+- Node 24 내장 `node:sqlite` 기반으로 `data/legal-knowledge.sqlite`를 생성한다.
+- 1차 seed에는 소상공인 핵심 법령 10개, 검증 주제 4개, 답변 템플릿 4개를 넣었다.
+- 화면의 기본 답변 흐름은 `/api/knowledge-answer`를 먼저 사용한다.
+- 확인 명령: `npm.cmd run test:kb`, `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run build`
+
 ## 2026-04-14
 
 ### 초기 구성
